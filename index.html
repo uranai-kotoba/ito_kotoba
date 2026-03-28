@@ -3,375 +3,362 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>縁結び御守鑑定｜いと 人生の縁導師</title>
-<meta name="description" content="霊視×お寺の教えで、あなたの縁と運命を読み解く。稲荷の眼で嘘まで見抜く縁導師・いとによる限定5名様の特別鑑定。">
+<title>専用波動御守鑑定｜いと 人生の縁導師</title>
+<meta name="description" content="霊視×お寺の教えで、あなただけの波動御守を奉製。稲荷の眼で嘘まで見抜く縁導師・いとによる限定5名様の特別鑑定。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ===== VARIABLES ===== */
 :root {
-  --crimson: #8B0000;
-  --vermillion: #C41E3A;
-  --deep-red: #6B0F1A;
-  --shrine-red: #B22222;
-  --gold: #C9A84C;
-  --gold-light: #E8D48B;
-  --gold-dark: #8B7332;
-  --ink: #1A0A0A;
-  --ink-light: #2D1515;
-  --paper: #FDF5E6;
+  --black:     #141410;
+  --black-mid: #1e1e18;
+  --black-soft:#2a2a22;
+  --cream:     #faf7f0;
+  --cream-mid: #f2ede3;
+  --cream-dark:#e8e0d0;
+  --gold:      #b8922a;
+  --gold-light:#d4aa48;
+  --gold-pale: #e8d48b;
+  --charcoal:  #1a1a14;
+  --ink:       #2c2c24;
+  --muted:     #6b6558;
+  --white:     #fffef9;
 }
+
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior:smooth; font-size:16px; }
 body {
   font-family: 'Zen Kaku Gothic New', sans-serif;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--cream);
+  color: var(--charcoal);
   line-height: 1.9;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-.section-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-.accent-text { color: var(--gold); font-family: 'Shippori Mincho', serif; }
-.red-accent { color: var(--vermillion); }
-.pattern-overlay {
-  position: absolute; inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(139,0,0,0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(196,30,58,0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-.asanoha-pattern {
-  position: absolute; inset: 0; opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23C9A84C' stroke-width='0.5'/%3E%3Cpath d='M30 0L30 60M0 30L60 30' fill='none' stroke='%23C9A84C' stroke-width='0.3'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-.particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+
+/* ===== UTILITY ===== */
+.section-inner { max-width: 700px; margin: 0 auto; padding: 0 28px; }
+.gold-text { color: var(--gold); }
+.fade-in { opacity:0; transform:translateY(32px); transition: opacity .9s ease, transform .9s ease; }
+.fade-in.visible { opacity:1; transform:translateY(0); }
+
+/* ===== PARTICLES ===== */
+.particles { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
 .particle {
-  position: absolute; width: 3px; height: 3px;
-  background: var(--gold); border-radius: 50%;
-  opacity: 0; animation: floatUp 8s infinite;
+  position:absolute; width:2px; height:2px; background:var(--gold-light);
+  border-radius:50%; opacity:0; animation: floatUp 10s infinite;
 }
 @keyframes floatUp {
-  0% { opacity:0; transform: translateY(100vh) scale(0.5); }
-  20% { opacity:0.6; }
-  80% { opacity:0.3; }
-  100% { opacity:0; transform: translateY(-10vh) scale(1.2); }
+  0%   { opacity:0; transform:translateY(100vh) scale(.5); }
+  20%  { opacity:.5; }
+  80%  { opacity:.2; }
+  100% { opacity:0; transform:translateY(-10vh) scale(1.2); }
 }
-.fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
 
-/* HERO */
+/* ===== HERO (dark) ===== */
 .hero {
-  position: relative; min-height: 100vh;
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  background: linear-gradient(175deg, var(--ink) 0%, var(--deep-red) 40%, var(--crimson) 70%, var(--ink) 100%);
-  overflow: hidden;
+  position:relative; min-height:100vh;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  background: radial-gradient(ellipse at 50% 60%, #2a2318 0%, var(--black) 70%);
+  overflow:hidden;
 }
 .hero::before {
-  content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 800px;
-  background: radial-gradient(circle, rgba(196,30,58,0.2) 0%, transparent 70%);
-  animation: heroGlow 6s ease-in-out infinite alternate;
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 50% 30%, rgba(184,146,42,.12) 0%, transparent 60%);
+  pointer-events:none;
 }
-@keyframes heroGlow {
-  0% { opacity:0.5; transform: translateX(-50%) scale(1); }
-  100% { opacity:1; transform: translateX(-50%) scale(1.15); }
+/* temple pattern - subtle karakusa */
+.hero::after {
+  content:''; position:absolute; inset:0; opacity:.04;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='%23b8922a' stroke-width='.6'/%3E%3Ccircle cx='40' cy='40' r='20' fill='none' stroke='%23b8922a' stroke-width='.4'/%3E%3Ccircle cx='40' cy='40' r='10' fill='none' stroke='%23b8922a' stroke-width='.3'/%3E%3Cpath d='M10 40 L70 40 M40 10 L40 70' stroke='%23b8922a' stroke-width='.3' fill='none'/%3E%3C/svg%3E");
+  pointer-events:none;
 }
-.hero-content { position: relative; z-index: 2; padding: 40px 24px; }
-.hero-badge {
-  display: inline-block; padding: 8px 28px;
-  border: 1px solid var(--gold); color: var(--gold);
-  font-family: 'Shippori Mincho', serif; font-size: 0.82rem;
-  letter-spacing: 0.25em; margin-bottom: 36px; position: relative;
-  animation: fadeInDown 1s ease 0.3s both;
+.hero-content { position:relative; z-index:2; padding:60px 28px; }
+
+.hero-eyebrow {
+  display:inline-block; padding:7px 24px;
+  border:1px solid rgba(184,146,42,.5); color:var(--gold-light);
+  font-family:'Shippori Mincho', serif; font-size:.78rem; letter-spacing:.28em;
+  margin-bottom:40px; border-radius:2px;
+  animation: fadeUp .9s ease .2s both;
 }
-.hero-badge::before, .hero-badge::after {
-  content: '⛩'; position: absolute; top: 50%; transform: translateY(-50%);
-  font-size: 0.7rem; opacity: 0.7;
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
 }
-.hero-badge::before { left: 8px; }
-.hero-badge::after { right: 8px; }
-@keyframes fadeInDown {
-  from { opacity:0; transform: translateY(-20px); }
-  to { opacity:1; transform: translateY(0); }
-}
-.hero-lead {
-  font-family: 'Shippori Mincho', serif; font-size: 0.95rem;
-  color: var(--gold-light); letter-spacing: 0.15em; margin-bottom: 20px;
-  animation: fadeInDown 1s ease 0.6s both;
+.hero-sub-lead {
+  font-family:'Shippori Mincho', serif; font-size:.88rem; color:rgba(232,212,139,.7);
+  letter-spacing:.18em; margin-bottom:22px; animation: fadeUp .9s ease .5s both;
 }
 .hero-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: clamp(1.8rem, 6vw, 3rem); font-weight: 700;
-  line-height: 1.5; letter-spacing: 0.08em; color: var(--paper);
-  margin-bottom: 24px; animation: fadeInDown 1s ease 0.8s both;
+  font-family:'Shippori Mincho', serif;
+  font-size: clamp(1.7rem,5.5vw,2.8rem); font-weight:700;
+  line-height:1.55; letter-spacing:.07em; color:var(--white);
+  margin-bottom:28px; animation: fadeUp .9s ease .7s both;
 }
-.hero-title em { font-style: normal; color: var(--gold); text-shadow: 0 0 30px rgba(201,168,76,0.4); }
-.hero-sub {
-  font-family: 'Noto Serif JP', serif; font-size: 0.92rem;
-  color: rgba(253,245,230,0.7); line-height: 2.2; letter-spacing: 0.06em;
-  max-width: 520px; margin: 0 auto 40px;
-  animation: fadeInDown 1s ease 1s both;
+.hero-title em { font-style:normal; color:var(--gold-pale); }
+.hero-body {
+  font-family:'Noto Serif JP', serif; font-size:.88rem;
+  color:rgba(255,254,249,.6); line-height:2.3; letter-spacing:.05em;
+  max-width:500px; margin:0 auto 44px; animation: fadeUp .9s ease .9s both;
 }
-.hero-limited {
-  display: inline-flex; align-items: center; gap: 12px;
-  background: rgba(139,0,0,0.5); border: 1px solid var(--vermillion);
-  padding: 14px 32px; border-radius: 4px;
-  font-family: 'Shippori Mincho', serif; font-size: 1.05rem;
-  color: var(--paper); letter-spacing: 0.12em;
-  animation: fadeInDown 1s ease 1.2s both;
+.hero-body strong { color:rgba(232,212,139,.9); font-weight:500; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:14px;
+  border:1px solid rgba(184,146,42,.4); padding:14px 36px; border-radius:3px;
+  font-family:'Shippori Mincho', serif; font-size:1rem; color:var(--white);
+  letter-spacing:.14em; background:rgba(184,146,42,.08);
+  animation: fadeUp .9s ease 1.1s both;
 }
-.hero-limited .num { font-size: 1.6rem; font-weight: 700; color: var(--gold); }
-.scroll-indicator {
-  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-  z-index: 2; animation: bounce 2s infinite;
+.hero-badge .num { font-size:1.5rem; font-weight:700; color:var(--gold-light); }
+.scroll-line {
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  z-index:2;
 }
-.scroll-indicator span {
-  display: block; width: 1px; height: 50px;
-  background: linear-gradient(to bottom, transparent, var(--gold));
+.scroll-line span {
+  display:block; width:1px; height:48px;
+  background:linear-gradient(to bottom, transparent, var(--gold));
+  animation: scrollBounce 2s ease-in-out infinite;
 }
-@keyframes bounce {
-  0%,100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(10px); }
-}
-
-/* COUNTDOWN */
-.countdown-section {
-  position: relative; padding: 60px 0;
-  background: linear-gradient(180deg, var(--ink) 0%, var(--ink-light) 50%, var(--ink) 100%);
-  text-align: center;
-}
-.countdown-label { font-family: 'Shippori Mincho', serif; font-size: 0.9rem; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 8px; }
-.countdown-sublabel { font-size: 0.82rem; color: rgba(253,245,230,0.5); margin-bottom: 28px; }
-.countdown-wrap { display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; }
-.countdown-unit { display: flex; flex-direction: column; align-items: center; min-width: 70px; }
-.countdown-num {
-  font-family: 'Shippori Mincho', serif; font-size: 2.4rem; font-weight: 700; color: var(--paper);
-  background: linear-gradient(135deg, var(--crimson), var(--deep-red));
-  border: 1px solid rgba(201,168,76,0.3); border-radius: 8px;
-  width: 72px; height: 72px; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(139,0,0,0.4);
-}
-.countdown-text { font-size: 0.72rem; color: var(--gold-dark); letter-spacing: 0.15em; margin-top: 8px; }
-.countdown-status { font-family: 'Shippori Mincho', serif; font-size: 1rem; color: var(--vermillion); letter-spacing: 0.1em; margin-top: 16px; }
-
-/* IMAGE */
-.hero-image-section { padding: 0 24px; max-width: 720px; margin: -20px auto 0; }
-.image-placeholder {
-  width: 100%; aspect-ratio: 1/1;
-  background: linear-gradient(135deg, var(--ink-light) 0%, rgba(139,0,0,0.2) 100%);
-  border: 1px dashed rgba(201,168,76,0.3); border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(201,168,76,0.4); font-family: 'Shippori Mincho', serif;
-  font-size: 0.85rem; letter-spacing: 0.1em;
+@keyframes scrollBounce {
+  0%,100% { transform:translateY(0); opacity:.6; }
+  50%      { transform:translateY(10px); opacity:1; }
 }
 
-/* SECTIONS */
-.problem-section { position: relative; padding: 100px 0; background: var(--ink); }
-.section-torii { text-align: center; font-size: 1.4rem; color: var(--vermillion); margin-bottom: 12px; opacity: 0.7; }
-.section-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 600;
-  text-align: center; line-height: 1.7; letter-spacing: 0.06em;
-  color: var(--paper); margin-bottom: 50px;
+/* ===== COUNTDOWN (dark strip) ===== */
+.countdown-strip {
+  background: var(--black-mid); padding:52px 0; text-align:center;
+  border-bottom:1px solid rgba(184,146,42,.12);
 }
-.section-title .gold { color: var(--gold); }
-.section-title .red { color: var(--vermillion); }
-.problem-text {
-  font-family: 'Noto Serif JP', serif; font-size: 0.95rem; line-height: 2.4;
-  color: rgba(253,245,230,0.85); text-align: center; letter-spacing: 0.04em;
-  max-width: 600px; margin: 0 auto;
+.cd-label { font-family:'Shippori Mincho', serif; font-size:.82rem; color:var(--gold-light); letter-spacing:.22em; margin-bottom:6px; }
+.cd-sublabel { font-size:.78rem; color:rgba(255,254,249,.35); margin-bottom:26px; }
+.cd-wrap { display:flex; justify-content:center; gap:14px; margin-bottom:18px; }
+.cd-unit { display:flex; flex-direction:column; align-items:center; }
+.cd-num {
+  font-family:'Shippori Mincho', serif; font-size:2.2rem; font-weight:700;
+  color:var(--white); background:rgba(184,146,42,.15);
+  border:1px solid rgba(184,146,42,.3); border-radius:6px;
+  width:68px; height:68px; display:flex; align-items:center; justify-content:center;
 }
-.problem-text p { margin-bottom: 28px; }
-.divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 48px auto; }
-.problem-list { list-style: none; max-width: 540px; margin: 40px auto 0; }
-.problem-list li {
-  position: relative; padding: 18px 20px 18px 48px;
-  font-family: 'Noto Serif JP', serif; font-size: 0.92rem;
-  color: rgba(253,245,230,0.8); border-bottom: 1px solid rgba(201,168,76,0.08); letter-spacing: 0.03em;
-}
-.problem-list li::before { content: '▪'; position: absolute; left: 20px; color: var(--vermillion); font-size: 0.7rem; }
+.cd-text { font-size:.68rem; color:var(--gold); letter-spacing:.14em; margin-top:7px; }
+.cd-status { font-family:'Shippori Mincho', serif; font-size:.92rem; color:#c87c5a; letter-spacing:.1em; margin-top:14px; }
 
-/* SOLUTION */
-.solution-section {
-  position: relative; padding: 100px 0;
-  background: linear-gradient(180deg, var(--ink) 0%, var(--deep-red) 50%, var(--ink) 100%);
-  overflow: hidden;
+/* ===== IMAGE BLOCK ===== */
+.img-section { background:var(--black); padding:0; }
+.img-section .image-placeholder {
+  width:100%; aspect-ratio:4/3; max-width:680px; margin:0 auto; display:block;
+  background:linear-gradient(135deg, #1a1a14 0%, rgba(184,146,42,.08) 100%);
+  border:1px dashed rgba(184,146,42,.2);
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(184,146,42,.3); font-family:'Shippori Mincho',serif; font-size:.8rem; letter-spacing:.1em;
 }
-.solution-box {
-  background: rgba(26,10,10,0.7); border: 1px solid rgba(201,168,76,0.2);
-  border-radius: 12px; padding: 60px 36px; text-align: center;
-  position: relative; backdrop-filter: blur(10px);
-}
-.solution-box::before {
-  content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
-  width: 80px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.solution-title {
-  font-family: 'Shippori Mincho', serif; font-size: clamp(1.2rem, 4vw, 1.6rem); font-weight: 600;
-  color: var(--gold); letter-spacing: 0.1em; margin-bottom: 32px; line-height: 1.8;
-}
-.solution-desc {
-  font-family: 'Noto Serif JP', serif; font-size: 0.92rem; line-height: 2.4;
-  color: rgba(253,245,230,0.85); max-width: 520px; margin: 0 auto; letter-spacing: 0.03em;
-}
-.solution-desc p { margin-bottom: 24px; }
 
-/* PROCESS */
-.process-section { position: relative; padding: 100px 0; background: var(--ink); }
-.process-steps {
-  display: flex; flex-direction: column; gap: 40px; margin-top: 50px;
-  max-width: 560px; margin-left: auto; margin-right: auto;
+/* ===== LIGHT SECTIONS ===== */
+.light-section { background:var(--cream); padding:96px 0; }
+.light-section.alt { background:var(--cream-mid); }
+.dark-section {
+  background: radial-gradient(ellipse at 50% 50%, #2a2318 0%, var(--black) 80%);
+  padding:96px 0;
 }
-.process-step { display: flex; gap: 24px; align-items: flex-start; }
-.step-number {
-  flex-shrink: 0; width: 48px; height: 48px;
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--gold); border-radius: 50%;
-  font-family: 'Shippori Mincho', serif; font-size: 1.1rem; font-weight: 600; color: var(--gold);
-}
-.step-content h3 {
-  font-family: 'Shippori Mincho', serif; font-size: 1.05rem; font-weight: 600;
-  color: var(--paper); letter-spacing: 0.06em; margin-bottom: 8px;
-}
-.step-content p { font-size: 0.88rem; color: rgba(253,245,230,0.65); line-height: 2; }
 
-/* PROFILE */
-.profile-section {
-  position: relative; padding: 100px 0;
-  background: linear-gradient(180deg, var(--ink) 0%, var(--ink-light) 100%);
+/* section labels */
+.s-eyebrow {
+  display:block; text-align:center;
+  font-family:'Zen Kaku Gothic New', sans-serif; font-size:.7rem; letter-spacing:.3em;
+  color:var(--gold); margin-bottom:18px; text-transform:uppercase;
 }
-.profile-card { text-align: center; }
-.profile-image-wrap {
-  width: 180px; height: 180px; margin: 0 auto 32px;
-  border-radius: 50%; border: 2px solid rgba(201,168,76,0.3); overflow: hidden;
-  background: linear-gradient(135deg, var(--crimson), var(--deep-red));
-  display: flex; align-items: center; justify-content: center;
-  color: rgba(201,168,76,0.3); font-size: 0.75rem; letter-spacing: 0.1em;
+.s-title {
+  font-family:'Shippori Mincho', serif;
+  font-size: clamp(1.25rem,3.5vw,1.75rem); font-weight:600;
+  text-align:center; line-height:1.75; letter-spacing:.06em;
+  color:var(--charcoal); margin-bottom:48px;
 }
-.profile-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.profile-name { font-family: 'Shippori Mincho', serif; font-size: 1.4rem; font-weight: 600; color: var(--paper); letter-spacing: 0.15em; margin-bottom: 8px; }
-.profile-role { font-family: 'Shippori Mincho', serif; font-size: 0.85rem; color: var(--gold); letter-spacing: 0.2em; margin-bottom: 28px; }
+.s-title .red { color:#9b3a2a; }
+.s-title .gold-t { color:var(--gold); }
+.s-title-light { color:var(--white); }
+.divider {
+  width:48px; height:1px; margin:44px auto;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* problem list */
+.prob-text {
+  font-family:'Noto Serif JP', serif; font-size:.9rem; line-height:2.4;
+  color:var(--ink); text-align:center; max-width:580px; margin:0 auto;
+}
+.prob-text p { margin-bottom:22px; }
+.prob-list { list-style:none; max-width:520px; margin:40px auto 0; }
+.prob-list li {
+  display:flex; align-items:flex-start; gap:16px;
+  padding:18px 0; border-bottom:1px solid var(--cream-dark);
+  font-family:'Noto Serif JP', serif; font-size:.88rem; color:var(--ink); line-height:1.8;
+}
+.prob-list li::before {
+  content:''; flex-shrink:0; width:22px; height:22px; margin-top:2px;
+  border-radius:50%; background:var(--gold);
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 22 22' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 11l4 4 6-7' stroke='white' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* solution box */
+.sol-box {
+  background:var(--white); border:1px solid rgba(184,146,42,.2);
+  border-top:3px solid var(--gold);
+  border-radius:4px; padding:56px 40px; text-align:center;
+  box-shadow:0 4px 40px rgba(0,0,0,.06);
+}
+.sol-title {
+  font-family:'Shippori Mincho', serif; font-size: clamp(1.15rem,3.5vw,1.5rem);
+  font-weight:600; color:var(--charcoal); letter-spacing:.08em; margin-bottom:28px; line-height:1.8;
+}
+.sol-desc {
+  font-family:'Noto Serif JP', serif; font-size:.88rem; line-height:2.4;
+  color:var(--ink); max-width:500px; margin:0 auto; text-align:left;
+}
+.sol-desc p { margin-bottom:20px; }
+
+/* process */
+.process-steps { display:flex; flex-direction:column; gap:0; margin-top:48px; max-width:540px; margin-left:auto; margin-right:auto; }
+.proc-step {
+  display:flex; gap:24px; align-items:flex-start; padding:28px 0;
+  border-bottom:1px solid var(--cream-dark); position:relative;
+}
+.proc-num {
+  flex-shrink:0; width:44px; height:44px; border-radius:50%;
+  border:1px solid var(--gold); display:flex; align-items:center; justify-content:center;
+  font-family:'Shippori Mincho', serif; font-size:1rem; font-weight:600; color:var(--gold);
+  background:var(--cream);
+}
+.proc-content h3 {
+  font-family:'Shippori Mincho', serif; font-size:.98rem; font-weight:600;
+  color:var(--charcoal); letter-spacing:.05em; margin-bottom:6px;
+}
+.proc-content p { font-size:.84rem; color:var(--muted); line-height:1.9; }
+
+/* profile */
+.profile-card { text-align:center; }
+.profile-img {
+  width:160px; height:160px; border-radius:50%; margin:0 auto 28px;
+  border:2px solid rgba(184,146,42,.3); overflow:hidden;
+  background:linear-gradient(135deg, #2a2318, #1a1a14);
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(184,146,42,.3); font-size:.72rem; letter-spacing:.1em;
+}
+.profile-img img { width:100%; height:100%; object-fit:cover; }
+.profile-name { font-family:'Shippori Mincho', serif; font-size:1.35rem; font-weight:600; color:var(--white); letter-spacing:.15em; margin-bottom:7px; }
+.profile-role { font-family:'Shippori Mincho', serif; font-size:.8rem; color:var(--gold-light); letter-spacing:.2em; margin-bottom:26px; }
 .profile-bio {
-  font-family: 'Noto Serif JP', serif; font-size: 0.9rem; line-height: 2.4;
-  color: rgba(253,245,230,0.8); max-width: 520px; margin: 0 auto;
-  text-align: left; letter-spacing: 0.03em;
+  font-family:'Noto Serif JP', serif; font-size:.86rem; line-height:2.3;
+  color:rgba(255,254,249,.7); max-width:500px; margin:0 auto; text-align:left;
 }
-.profile-stats { display: flex; justify-content: center; gap: 48px; margin-top: 36px; }
-.stat-item { text-align: center; }
-.stat-num { font-family: 'Shippori Mincho', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
-.stat-label { font-size: 0.75rem; color: rgba(253,245,230,0.5); letter-spacing: 0.1em; margin-top: 4px; }
+.profile-bio p { margin-bottom:16px; }
+.profile-stats { display:flex; justify-content:center; gap:40px; margin-top:36px; flex-wrap:wrap; }
+.stat { text-align:center; }
+.stat-n { font-family:'Shippori Mincho', serif; font-size:1.45rem; font-weight:700; color:var(--gold-light); }
+.stat-l { font-size:.7rem; color:rgba(255,254,249,.4); letter-spacing:.1em; margin-top:4px; }
 
-/* WHY */
-.why-section {
-  position: relative; padding: 100px 0;
-  background: linear-gradient(180deg, var(--ink-light) 0%, var(--deep-red) 50%, var(--ink) 100%);
-  text-align: center;
-}
+/* why */
 .why-text {
-  font-family: 'Noto Serif JP', serif; font-size: 0.92rem; line-height: 2.4;
-  color: rgba(253,245,230,0.85); max-width: 520px; margin: 0 auto; letter-spacing: 0.03em;
+  font-family:'Noto Serif JP', serif; font-size:.88rem; line-height:2.4;
+  color:var(--ink); max-width:500px; margin:0 auto; text-align:center;
 }
+.why-text p { margin-bottom:20px; }
 
-/* PRICING */
-.pricing-section {
-  position: relative; padding: 100px 0;
-  background: linear-gradient(180deg, var(--ink) 0%, var(--deep-red) 50%, var(--ink) 100%);
-  text-align: center; overflow: hidden;
+/* pricing */
+.price-card {
+  background:var(--white); border:1px solid rgba(184,146,42,.25);
+  border-radius:6px; padding:52px 36px; max-width:460px; margin:0 auto;
+  position:relative; box-shadow:0 8px 48px rgba(0,0,0,.08);
 }
-.pricing-card {
-  background: rgba(26,10,10,0.85); border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 16px; padding: 56px 36px; max-width: 480px; margin: 0 auto;
-  position: relative; backdrop-filter: blur(10px);
+.price-card::before {
+  content:'特別鑑定'; position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+  background:var(--gold); padding:4px 22px;
+  font-family:'Shippori Mincho', serif; font-size:.75rem;
+  color:var(--white); letter-spacing:.18em; border-radius:20px; white-space:nowrap;
 }
-.pricing-card::before {
-  content: '特別鑑定'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-  background: var(--crimson); border: 1px solid var(--gold);
-  padding: 4px 24px; font-family: 'Shippori Mincho', serif; font-size: 0.8rem;
-  color: var(--gold); letter-spacing: 0.2em; border-radius: 20px; white-space: nowrap;
-}
-.pricing-title { font-family: 'Shippori Mincho', serif; font-size: 1.2rem; font-weight: 600; color: var(--paper); letter-spacing: 0.1em; margin-bottom: 8px; margin-top: 12px; }
-.pricing-subtitle { font-size: 0.82rem; color: rgba(253,245,230,0.5); margin-bottom: 32px; }
-.original-price { font-family: 'Shippori Mincho', serif; font-size: 1.1rem; color: rgba(253,245,230,0.4); text-decoration: line-through; margin-bottom: 8px; }
-.special-price { font-family: 'Shippori Mincho', serif; font-size: 3rem; font-weight: 800; color: var(--gold); letter-spacing: 0.05em; line-height: 1.2; text-shadow: 0 0 40px rgba(201,168,76,0.3); }
-.special-price .yen { font-size: 1.4rem; font-weight: 600; }
-.special-price .tax { font-size: 0.75rem; font-weight: 400; color: rgba(253,245,230,0.4); }
-.pricing-reason { font-family: 'Noto Serif JP', serif; font-size: 0.82rem; color: rgba(253,245,230,0.6); margin-top: 16px; line-height: 1.9; max-width: 380px; margin-left: auto; margin-right: auto; }
-.pricing-includes { list-style: none; margin-top: 32px; text-align: left; max-width: 340px; margin-left: auto; margin-right: auto; }
-.pricing-includes li { padding: 10px 0; font-size: 0.88rem; color: rgba(253,245,230,0.8); border-bottom: 1px solid rgba(201,168,76,0.08); padding-left: 24px; position: relative; }
-.pricing-includes li::before { content: '✦'; position: absolute; left: 0; color: var(--gold); font-size: 0.65rem; }
+.price-title { font-family:'Shippori Mincho', serif; font-size:1.15rem; font-weight:600; color:var(--charcoal); letter-spacing:.1em; margin:16px 0 6px; }
+.price-sub { font-size:.78rem; color:var(--muted); margin-bottom:28px; }
+.price-original { font-size:1rem; color:var(--muted); text-decoration:line-through; margin-bottom:6px; }
+.price-main { font-family:'Shippori Mincho', serif; font-size:2.8rem; font-weight:800; color:var(--gold); line-height:1.2; }
+.price-main .yen { font-size:1.3rem; font-weight:600; }
+.price-main .tax { font-size:.72rem; font-weight:400; color:var(--muted); }
+.price-reason { font-size:.8rem; color:var(--muted); margin-top:14px; line-height:1.8; }
+.price-includes { list-style:none; margin-top:28px; text-align:left; max-width:320px; margin-left:auto; margin-right:auto; }
+.price-includes li { padding:9px 0 9px 22px; font-size:.84rem; color:var(--ink); border-bottom:1px solid var(--cream-dark); position:relative; }
+.price-includes li::before { content:'✦'; position:absolute; left:0; color:var(--gold); font-size:.6rem; top:12px; }
 
-/* VOICE */
-.voice-section { position: relative; padding: 100px 0; background: linear-gradient(180deg, var(--ink) 0%, var(--ink-light) 100%); }
-.voice-cards { display: flex; flex-direction: column; gap: 28px; margin-top: 50px; max-width: 560px; margin-left: auto; margin-right: auto; }
-.voice-card { background: rgba(139,0,0,0.1); border: 1px solid rgba(201,168,76,0.1); border-radius: 10px; padding: 28px 24px; position: relative; }
-.voice-card::before { content: '"'; position: absolute; top: 12px; left: 16px; font-family: 'Shippori Mincho', serif; font-size: 2.5rem; color: rgba(201,168,76,0.15); line-height: 1; }
-.voice-card p { font-family: 'Noto Serif JP', serif; font-size: 0.88rem; line-height: 2.2; color: rgba(253,245,230,0.75); padding-left: 8px; }
-.voice-card .voice-attr { margin-top: 12px; font-size: 0.78rem; color: var(--gold-dark); text-align: right; letter-spacing: 0.05em; }
+/* voice */
+.voice-list { display:flex; flex-direction:column; gap:24px; margin-top:48px; max-width:540px; margin-left:auto; margin-right:auto; }
+.voice-card { background:var(--white); border-left:3px solid var(--gold); padding:24px 24px 20px; border-radius:0 4px 4px 0; box-shadow:0 2px 16px rgba(0,0,0,.05); position:relative; }
+.voice-card::before { content:'"'; position:absolute; top:10px; left:18px; font-family:'Shippori Mincho',serif; font-size:2rem; color:rgba(184,146,42,.2); line-height:1; }
+.voice-card p { font-family:'Noto Serif JP', serif; font-size:.84rem; line-height:2.1; color:var(--ink); padding-left:6px; }
+.voice-attr { margin-top:10px; font-size:.75rem; color:var(--muted); text-align:right; }
 
 /* FAQ */
-.faq-section { position: relative; padding: 100px 0; background: var(--ink); }
-.faq-list { max-width: 560px; margin: 50px auto 0; }
-.faq-item { border-bottom: 1px solid rgba(201,168,76,0.1); padding: 24px 0; }
-.faq-q { font-family: 'Shippori Mincho', serif; font-size: 0.95rem; color: var(--gold); letter-spacing: 0.05em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-.faq-q::before { content: 'Q.'; margin-right: 12px; color: var(--vermillion); font-weight: 700; }
-.faq-q .toggle { font-size: 1.2rem; transition: transform 0.3s; color: rgba(253,245,230,0.3); }
-.faq-item.open .faq-q .toggle { transform: rotate(45deg); }
-.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
-.faq-item.open .faq-a { max-height: 300px; padding-top: 16px; }
-.faq-a p { font-size: 0.88rem; color: rgba(253,245,230,0.65); line-height: 2; padding-left: 28px; }
-
-/* CTA */
-.cta-section { position: relative; padding: 100px 0; background: var(--ink); text-align: center; }
-.cta-text { font-family: 'Noto Serif JP', serif; font-size: 0.92rem; color: rgba(253,245,230,0.7); line-height: 2.2; max-width: 480px; margin: 0 auto 40px; }
-.cta-button {
-  display: inline-flex; align-items: center; gap: 12px; padding: 20px 52px;
-  background: linear-gradient(135deg, var(--crimson), var(--shrine-red));
-  border: 1px solid var(--gold); border-radius: 6px;
-  color: var(--gold); font-family: 'Shippori Mincho', serif;
-  font-size: 1.1rem; font-weight: 600; letter-spacing: 0.15em;
-  text-decoration: none; transition: all 0.4s ease; position: relative; overflow: hidden; cursor: pointer;
+.faq-list { max-width:540px; margin:48px auto 0; }
+.faq-item { border-bottom:1px solid var(--cream-dark); padding:22px 0; }
+.faq-q {
+  font-family:'Shippori Mincho', serif; font-size:.9rem; color:var(--charcoal);
+  cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px;
 }
-.cta-button::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent, rgba(201,168,76,0.1), transparent); transform: translateX(-100%); transition: transform 0.6s ease; }
-.cta-button:hover::before { transform: translateX(100%); }
-.cta-button:hover { box-shadow: 0 0 40px rgba(139,0,0,0.5), 0 0 80px rgba(201,168,76,0.15); transform: translateY(-2px); }
-.cta-note { font-size: 0.78rem; color: rgba(253,245,230,0.4); margin-top: 20px; letter-spacing: 0.05em; }
-.cta-remaining { display: inline-block; margin-top: 24px; padding: 8px 24px; border: 1px solid var(--vermillion); border-radius: 4px; font-family: 'Shippori Mincho', serif; font-size: 0.88rem; color: var(--vermillion); letter-spacing: 0.1em; animation: pulse 2s infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+.faq-q::before { content:'Q.'; color:var(--gold); font-weight:700; flex-shrink:0; }
+.faq-q .tgl { font-size:1.1rem; color:var(--muted); transition:transform .3s; flex-shrink:0; }
+.faq-item.open .faq-q .tgl { transform:rotate(45deg); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease, padding .4s; }
+.faq-item.open .faq-a { max-height:260px; padding-top:14px; }
+.faq-a p { font-size:.84rem; color:var(--muted); line-height:1.95; padding-left:26px; }
+
+/* CTA section */
+.cta-section { background:var(--cream); padding:96px 0; text-align:center; }
+.cta-lead { font-family:'Noto Serif JP', serif; font-size:.88rem; color:var(--ink); line-height:2.2; max-width:460px; margin:0 auto 36px; }
+.cta-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  padding:18px 52px; background:var(--gold);
+  border:none; border-radius:3px; cursor:pointer;
+  color:var(--white); font-family:'Shippori Mincho', serif;
+  font-size:1rem; font-weight:600; letter-spacing:.15em; text-decoration:none;
+  transition:all .35s; box-shadow:0 4px 24px rgba(184,146,42,.3);
+}
+.cta-btn:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 8px 32px rgba(184,146,42,.4); }
+.cta-note { font-size:.74rem; color:var(--muted); margin-top:16px; }
+.cta-remaining { display:inline-block; margin-top:20px; padding:7px 22px; border:1px solid #9b3a2a; border-radius:3px; font-family:'Shippori Mincho', serif; font-size:.84rem; color:#9b3a2a; letter-spacing:.1em; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.6; } }
+.cta-period { font-size:.76rem; color:var(--muted); margin-top:10px; letter-spacing:.06em; }
 
 /* FOOTER */
-.footer { padding: 40px 0; text-align: center; background: var(--ink); border-top: 1px solid rgba(201,168,76,0.06); }
-.footer p { font-size: 0.72rem; color: rgba(253,245,230,0.25); letter-spacing: 0.05em; }
+.footer { background:var(--black); padding:36px 0; text-align:center; border-top:1px solid rgba(184,146,42,.1); }
+.footer p { font-size:.7rem; color:rgba(255,254,249,.2); letter-spacing:.05em; }
 
 /* MODAL */
-.prelaunch-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(10,4,4,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
-.prelaunch-overlay.show { display: flex; }
-.prelaunch-modal { background: linear-gradient(135deg, var(--ink-light), var(--deep-red)); border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 48px 36px; max-width: 400px; width: 90%; text-align: center; animation: modalIn 0.4s ease; }
-@keyframes modalIn { from { opacity:0; transform: scale(0.9) translateY(20px); } to { opacity:1; transform: scale(1) translateY(0); } }
-.prelaunch-torii { font-size: 1.6rem; color: var(--vermillion); margin-bottom: 16px; opacity: 0.8; }
-.prelaunch-title { font-family: 'Shippori Mincho', serif; font-size: 1.2rem; font-weight: 600; color: var(--paper); letter-spacing: 0.1em; line-height: 1.7; }
-.prelaunch-divider { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto; }
-.prelaunch-text { font-family: 'Noto Serif JP', serif; font-size: 0.9rem; color: rgba(253,245,230,0.8); line-height: 2; letter-spacing: 0.03em; }
-.prelaunch-close { margin-top: 28px; padding: 12px 36px; background: transparent; border: 1px solid var(--gold); border-radius: 6px; color: var(--gold); font-family: 'Shippori Mincho', serif; font-size: 0.9rem; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
-.prelaunch-close:hover { background: rgba(201,168,76,0.1); }
+.overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,.75); backdrop-filter:blur(6px); align-items:center; justify-content:center; }
+.overlay.show { display:flex; }
+.modal { background:linear-gradient(135deg, #1e1e18, #2a2318); border:1px solid rgba(184,146,42,.3); border-radius:12px; padding:44px 32px; max-width:380px; width:90%; text-align:center; animation:modalIn .4s ease; }
+@keyframes modalIn { from { opacity:0; transform:scale(.92) translateY(16px); } to { opacity:1; transform:scale(1) translateY(0); } }
+.modal-icon { font-size:2rem; margin-bottom:16px; opacity:.7; }
+.modal-title { font-family:'Shippori Mincho',serif; font-size:1.1rem; font-weight:600; color:var(--white); letter-spacing:.1em; line-height:1.7; }
+.modal-div { width:36px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:18px auto; }
+.modal-body { font-family:'Noto Serif JP',serif; font-size:.84rem; color:rgba(255,254,249,.75); line-height:2; }
+.modal-close { margin-top:24px; padding:10px 32px; background:transparent; border:1px solid var(--gold); border-radius:4px; color:var(--gold); font-family:'Shippori Mincho',serif; font-size:.84rem; cursor:pointer; transition:all .3s; }
+.modal-close:hover { background:rgba(184,146,42,.1); }
 
-/* STICKY CTA */
-.sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: rgba(26,10,10,0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(201,168,76,0.15); padding: 14px 20px; text-align: center; transform: translateY(100%); transition: transform 0.5s ease; }
-.sticky-cta.show { transform: translateY(0); }
-.sticky-cta-btn { display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, var(--crimson), var(--shrine-red)); border: 1px solid var(--gold); border-radius: 6px; color: var(--gold); font-family: 'Shippori Mincho', serif; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.12em; text-decoration: none; width: 100%; max-width: 360px; }
-.sticky-cta-sub { font-size: 0.7rem; color: rgba(253,245,230,0.4); margin-top: 4px; }
+/* STICKY */
+.sticky { position:fixed; bottom:0; left:0; right:0; z-index:100; background:rgba(20,20,16,.96); backdrop-filter:blur(10px); border-top:1px solid rgba(184,146,42,.2); padding:12px 20px; text-align:center; transform:translateY(100%); transition:transform .45s; }
+.sticky.show { transform:translateY(0); }
+.sticky-btn { display:inline-block; padding:13px 40px; background:var(--gold); border-radius:3px; color:var(--white); font-family:'Shippori Mincho',serif; font-size:.9rem; font-weight:600; letter-spacing:.12em; text-decoration:none; width:100%; max-width:340px; transition:background .3s; }
+.sticky-btn:hover { background:var(--gold-light); }
+.sticky-sub { font-size:.66rem; color:rgba(255,254,249,.35); margin-top:4px; }
 
-@media (max-width: 640px) {
-  .section-inner { padding: 0 18px; }
-  .hero-title { font-size: 1.6rem; }
-  .countdown-num { width: 58px; height: 58px; font-size: 1.8rem; }
-  .countdown-wrap { gap: 10px; }
-  .pricing-card { padding: 48px 24px; }
-  .special-price { font-size: 2.4rem; }
-  .profile-stats { gap: 16px; flex-wrap: wrap; }
-  .solution-box { padding: 48px 24px; }
-  .process-step { gap: 16px; }
-  .cta-button { padding: 18px 36px; font-size: 1rem; }
+/* RESPONSIVE */
+@media (max-width:640px) {
+  .section-inner { padding:0 20px; }
+  .hero-title { font-size:1.55rem; }
+  .cd-num { width:58px; height:58px; font-size:1.8rem; }
+  .cd-wrap { gap:10px; }
+  .price-card { padding:44px 20px; }
+  .price-main { font-size:2.3rem; }
+  .sol-box { padding:44px 20px; }
+  .proc-step { gap:16px; }
+  .cta-btn { padding:16px 32px; font-size:.92rem; }
+  .profile-stats { gap:20px; }
 }
 </style>
 </head>
@@ -379,118 +366,117 @@ body {
 
 <div class="particles" id="particles"></div>
 
-<!-- HERO -->
+<!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="pattern-overlay"></div>
-  <div class="asanoha-pattern"></div>
   <div class="hero-content">
-    <div class="hero-badge">三月二十九日〜三十一日 特別販売</div>
-    <p class="hero-lead">── 稲荷の眼で、あなたの縁と運命を読み解く ──</p>
+    <div class="hero-eyebrow">三月二十九日〜三十一日 特別販売</div>
+    <p class="hero-sub-lead">── 400年の歴史が宿る、稲荷の眼で見抜く ──</p>
     <h1 class="hero-title">
-      いまあなたを縛っている<br>
-      <em>"見えない縁"を、霊視で解き放つ</em>
+      あなたの波動に<em>ぴったり合った</em><br>
+      御守りを、霊視で奉製します
     </h1>
-    <p class="hero-sub">
-      霊視 × お寺の教えで、<br>
-      あなたの波動と縁の状態を詳細に鑑定いたします。<br>
+    <p class="hero-body">
+      お寺の教えと霊視を掛け合わせた独自の鑑定で、<br>
+      あなたの波動の状態を深く読み解きます。<br>
       そしてその結果をもとに、<br>
-      <strong style="color: var(--gold-light);">あなたの縁を守り、運命を好転させる御守り</strong>を<br>
-      奉製できる可能性がございます。
+      <strong>あなただけの専用波動御守</strong>を奉製できる可能性があります。
     </p>
-    <div class="hero-limited">
+    <div class="hero-badge">
       限定 <span class="num">5</span> 名様のみ
     </div>
   </div>
-  <div class="scroll-indicator"><span></span></div>
+  <div class="scroll-line"><span></span></div>
 </section>
 
-<!-- COUNTDOWN -->
-<section class="countdown-section" id="countdown">
+<!-- ============ COUNTDOWN ============ -->
+<section class="countdown-strip">
   <div class="section-inner">
-    <p class="countdown-label" id="countdown-label">◆ 販売開始まで ◆</p>
-    <p class="countdown-sublabel" id="countdown-sublabel">2026年3月29日（日）19:00 〜 3月31日（火）23:59</p>
-    <div class="countdown-wrap">
-      <div class="countdown-unit"><div class="countdown-num" id="cd-days">--</div><div class="countdown-text">日</div></div>
-      <div class="countdown-unit"><div class="countdown-num" id="cd-hours">--</div><div class="countdown-text">時間</div></div>
-      <div class="countdown-unit"><div class="countdown-num" id="cd-mins">--</div><div class="countdown-text">分</div></div>
-      <div class="countdown-unit"><div class="countdown-num" id="cd-secs">--</div><div class="countdown-text">秒</div></div>
+    <p class="cd-label" id="cd-label">◆ 販売開始まで ◆</p>
+    <p class="cd-sublabel" id="cd-sublabel">2026年3月29日（日）19:00 〜 3月31日（火）23:59</p>
+    <div class="cd-wrap">
+      <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-text">日</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-text">時間</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-text">分</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-text">秒</div></div>
     </div>
-    <p class="countdown-status" id="countdown-status"></p>
+    <p class="cd-status" id="cd-status"></p>
   </div>
 </section>
 
-<!-- IMAGE -->
-<section class="hero-image-section">
-  <div class="image-placeholder">神社・稲荷の画像がここに入ります</div>
+<!-- ============ IMAGE ============ -->
+<section class="img-section">
+  <div class="section-inner">
+    <div class="image-placeholder">お寺・仏閣の画像がここに入ります</div>
+  </div>
 </section>
 
-<!-- PROBLEM -->
-<section class="problem-section">
+<!-- ============ PROBLEM ============ -->
+<section class="light-section">
   <div class="section-inner fade-in">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title">
-      いまあなたの周りで起きていること、<br>
-      <span class="red">すべて"縁の乱れ"から来ているかもしれません</span>
+    <span class="s-eyebrow">Do you feel this way?</span>
+    <h2 class="s-title">
+      いまの御守り、<br>
+      <span class="red">本当にあなたの波動に合っていますか？</span>
     </h2>
-    <div class="problem-text">
+    <div class="prob-text">
       <p>
-        片思いが実らない。復縁できない。<br>
-        お金がなかなか入ってこない。<br>
-        人間関係がうまくいかない。
+        お寺で授かった御守りは、多くの方に向けて祈願された、<br>
+        大衆のためのもの。
       </p>
       <p>
-        これらはすべて、<br>
-        <strong>あなたの縁の状態が乱れているサイン</strong>かもしれません。
+        もちろんそこに込められた仏の教えは尊いものです。<br>
+        けれど──<br>
+        <strong>あなたの波動に合っているとは限りません。</strong>
       </p>
       <p>
-        縁は目に見えません。<br>
-        だからこそ、<strong>稲荷の眼で霊視</strong>しなければ、<br>
-        その乱れの根本を知ることはできないのです。
+        人はそれぞれ異なる波動を持ち、その状態は日々変化します。<br>
+        自分の波動がいまどんな状態かを知らなければ、<br>
+        本当に必要な"護り"を選ぶことすらできないのです。
       </p>
     </div>
     <div class="divider"></div>
-    <h3 class="section-title" style="font-size:1.1rem; margin-bottom:30px;">
+    <h3 style="font-family:'Shippori Mincho',serif;font-size:1.05rem;text-align:center;color:var(--charcoal);margin-bottom:28px;letter-spacing:.06em;">
       こんな想いが、胸のどこかにありませんか？
     </h3>
-    <ul class="problem-list">
-      <li>好きな人との縁がなかなか結ばれない、片思いが続いている</li>
-      <li>復縁したいのに、どうしても踏み出せない</li>
+    <ul class="prob-list">
+      <li>御守りを持っていても、なぜか心が軽くならない</li>
+      <li>片思いが実らない、復縁の糸口がつかめない</li>
       <li>頑張っているのにお金がなかなか入ってこない</li>
       <li>人間関係のトラブルが繰り返し起きる</li>
-      <li>何かに守られている感覚がなく、孤独を感じる</li>
-      <li>運命を変えたいのに、何から始めればいいかわからない</li>
+      <li>自分の波動がいまどんな状態なのか分からない</li>
+      <li>運命を変えたいのに、何から始めればいいか分からない</li>
     </ul>
   </div>
 </section>
 
-<!-- SOLUTION -->
-<section class="solution-section">
+<!-- ============ SOLUTION ============ -->
+<section class="light-section alt">
   <div class="section-inner">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title" style="color: var(--paper);">
-      400年の歴史が宿る稲荷の眼で、<br>
-      <span class="gold">縁の乱れを見抜き、道を照らす</span>
+    <span class="s-eyebrow">About this service</span>
+    <h2 class="s-title">
+      まず、あなたの波動を知ること。<br>
+      <span class="gold-t">すべてはそこから始まります</span>
     </h2>
-    <div class="solution-box fade-in">
-      <h2 class="solution-title">縁結び御守鑑定とは</h2>
-      <div class="solution-desc">
+    <div class="sol-box fade-in">
+      <h2 class="sol-title">専用波動御守鑑定とは</h2>
+      <div class="sol-desc">
         <p>
-          この鑑定では、霊視とお寺の教えを掛け合わせて、<br>
-          あなたの縁と運命の状態を深く読み解いていきます。
+          この鑑定では、400年の歴史が宿る稲荷の眼と、<br>
+          お寺の教えを掛け合わせた霊視によって、<br>
+          あなたの波動の状態を深く、丁寧に読み解いていきます。
         </p>
         <p>
           片思い・復縁・金運・対人関係──<br>
-          なぜうまくいかないのか、その根本にある<br>
-          <span class="accent-text">縁の乱れと波動の状態</span>を詳細にお伝えします。
+          うまくいかない根本にある<strong>波動の乱れや詰まり</strong>を<br>
+          詳細にお伝えいたします。
         </p>
         <p>
-          そして鑑定の結果をもとに、<br>
-          <span class="accent-text">あなたの縁を護り、運命を好転させる御守り</span>を<br>
-          奉製することも可能です。
+          そして鑑定の結果をもとに、あなたの波動に<br>
+          <strong>ぴったり合った専用御守りを奉製</strong>することも可能です。
         </p>
         <p>
-          ただし、御守りの奉製にはわたし自身の霊力を注ぐ必要があり、<br>
-          すべての方にお届けすることは叶いません。<br>
+          ただし御守りの奉製にはわたし自身の霊力を注ぐ必要があり、<br>
+          すべての方にお届けできるわけではありません。<br>
           鑑定後、特に縁の深い方にのみご案内いたします。
         </p>
       </div>
@@ -498,385 +484,286 @@ body {
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="process-section">
+<!-- ============ PROCESS ============ -->
+<section class="light-section">
   <div class="section-inner">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title">御守りがあなたに届くまで</h2>
+    <span class="s-eyebrow">How it works</span>
+    <h2 class="s-title">御守りがあなたに届くまで</h2>
     <div class="process-steps fade-in">
-      <div class="process-step">
-        <div class="step-number">壱</div>
-        <div class="step-content">
+      <div class="proc-step">
+        <div class="proc-num">壱</div>
+        <div class="proc-content">
           <h3>お申し込み</h3>
           <p>このページの申し込みリンクからお申し込みください。</p>
         </div>
       </div>
-      <div class="process-step">
-        <div class="step-number">弐</div>
-        <div class="step-content">
-          <h3>公式LINEでお申し込みのご報告</h3>
-          <p>お申し込みが完了しましたら、公式LINEにてその旨をお伝えください。確認が取れ次第、VIP専用LINEへご招待いたします。</p>
+      <div class="proc-step">
+        <div class="proc-num">弐</div>
+        <div class="proc-content">
+          <h3>公式LINEでご報告</h3>
+          <p>お申し込み完了後、公式LINEにてその旨をお伝えください。確認後、VIP専用LINEへご招待いたします。</p>
         </div>
       </div>
-      <div class="process-step">
-        <div class="step-number">参</div>
-        <div class="step-content">
-          <h3>縁と波動の霊視鑑定</h3>
-          <p>VIP専用LINEにてお悩みや想いをお聞きしたうえで、稲荷の眼であなたの縁と波動を深く読み解きます。</p>
+      <div class="proc-step">
+        <div class="proc-num">参</div>
+        <div class="proc-content">
+          <h3>波動の霊視鑑定</h3>
+          <p>VIP専用LINEにてお悩みをお聞きしたうえで、稲荷の眼であなたの波動を深く読み解きます。</p>
         </div>
       </div>
-      <div class="process-step">
-        <div class="step-number">肆</div>
-        <div class="step-content">
+      <div class="proc-step">
+        <div class="proc-num">肆</div>
+        <div class="proc-content">
           <h3>鑑定結果のお届け</h3>
-          <p>VIP専用LINEにて、縁の状態・運命の流れ・いま必要な力の方向性を鑑定文としてお送りいたします。</p>
+          <p>波動の全体像・いま必要な力の方向性を鑑定文としてLINEにてお送りいたします。</p>
         </div>
       </div>
-      <div class="process-step">
-        <div class="step-number">伍</div>
-        <div class="step-content">
+      <div class="proc-step" style="border-bottom:none;">
+        <div class="proc-num">伍</div>
+        <div class="proc-content">
           <h3>御守りのご案内（対象の方のみ）</h3>
-          <p>鑑定の結果、特に縁の深い方には、あなた専用の御守り奉製について別途ご案内させていただきます。</p>
+          <p>波動の相性が深い方には、あなた専用の御守り奉製について別途ご案内いたします。</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROFILE -->
-<section class="profile-section">
+<!-- ============ PROFILE (dark) ============ -->
+<section class="dark-section">
   <div class="section-inner">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title">奉製を担う者について</h2>
+    <span class="s-eyebrow" style="color:var(--gold-light);">About me</span>
+    <h2 class="s-title s-title-light">奉製を担う者について</h2>
     <div class="profile-card fade-in">
-      <div class="profile-image-wrap">
-        <span>画像</span>
-      </div>
+      <div class="profile-img"><span>画像</span></div>
       <h3 class="profile-name">いと</h3>
       <p class="profile-role">人生の縁導師｜霊視鑑定師</p>
       <div class="profile-bio">
         <p>
           【霊視 × "お寺の教え"で願いを叶える】
         </p>
-        <p style="margin-top:16px;">
+        <p>
           400年の歴史を持つ稲荷の眼で、嘘すら見抜く霊視鑑定師。<br>
-          幼少の頃より目に見えないものの気配とともに過ごし、<br>
-          お寺の教えと霊視を掛け合わせた独自の鑑定を確立しました。
+          幼少の頃よりお寺の教えとともに育ち、目に見えないものの気配とともに過ごしてきました。
         </p>
-        <p style="margin-top:16px;">
-          片思い・臨時収入・復縁・対人関係を中心に、<br>
-          これまで2,000人以上の縁と運命を読み解いてきました。
+        <p>
+          仏の教えと霊視を掛け合わせた独自の鑑定で、<br>
+          片思い・臨時収入・復縁・対人関係を中心に<br>
+          これまで2,000人以上の波動と縁を読み解いてきました。
         </p>
       </div>
       <div class="profile-stats">
-        <div class="stat-item">
-          <div class="stat-num">14年</div>
-          <div class="stat-label">占い師歴</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">2,000人+</div>
-          <div class="stat-label">救済実績</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">400年</div>
-          <div class="stat-label">稲荷の歴史</div>
-        </div>
+        <div class="stat"><div class="stat-n">14年</div><div class="stat-l">占い師歴</div></div>
+        <div class="stat"><div class="stat-n">2,000人+</div><div class="stat-l">救済実績</div></div>
+        <div class="stat"><div class="stat-n">400年</div><div class="stat-l">稲荷の歴史</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- VOICE -->
-<section class="voice-section">
+<!-- ============ VOICE ============ -->
+<section class="light-section alt">
   <div class="section-inner">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title">御守りを受け取った方の声</h2>
-    <div class="voice-cards fade-in">
+    <span class="s-eyebrow">Testimonials</span>
+    <h2 class="s-title">御守りを受け取った方の声</h2>
+    <div class="voice-list fade-in">
       <div class="voice-card">
-        <p>
-          3年間ずっと片思いしていた人がいて、もう諦めようとしていました。鑑定でいとさんに「縁はある、でも今は乱れている」と言われて、御守りを受け取ってから1ヶ月後に彼から連絡がきました。あの日鑑定を受けていなかったら、きっと諦めていたと思います。
-        </p>
+        <p>3年間ずっと片思いしていた人がいて、もう諦めようとしていました。鑑定でいとさんに「波動に詰まりがある、でも縁は残っている」と言われ、御守りを受け取った1ヶ月後に彼から連絡が来ました。あの日鑑定を受けていなかったら、きっと諦めていたと思います。</p>
         <p class="voice-attr">── 20代女性</p>
       </div>
       <div class="voice-card">
-        <p>
-          復縁を諦めかけていましたが、「まだ縁は切れていない」という言葉に救われました。御守りを受け取ってから不思議と気持ちが落ち着いて、自然な流れで連絡を取り合えるようになりました。今は少しずつ距離が縮まっています。
-        </p>
+        <p>復縁を諦めかけていましたが、「まだ波動の縁は切れていない」という言葉に救われました。御守りを身につけてから気持ちが落ち着いて、自然な流れで連絡を取り合えるようになりました。今は少しずつ距離が縮まっています。</p>
         <p class="voice-attr">── 30代女性</p>
       </div>
       <div class="voice-card">
-        <p>
-          仕事もお金も全部うまくいかない時期が続いていました。いとさんの鑑定で「金運の縁が詰まっている」と言われ、御守りを持ち始めてから臨時収入が入るようになり、職場の人間関係も驚くほど改善されました。
-        </p>
+        <p>仕事もお金も全部うまくいかない時期が続いていました。「金運の波動が詰まっている」と言われ御守りを持ち始めてから、臨時収入が入るようになり、職場の人間関係も驚くほど改善されました。</p>
         <p class="voice-attr">── 40代男性</p>
       </div>
       <div class="voice-card">
-        <p>
-          職場のトラブルが絶えず、毎日が辛かったです。鑑定では「対人の縁が乱れている、でも変えられる」と言っていただき、御守りを受け取ってから1ヶ月で人間関係が嘘みたいに穏やかになりました。
-        </p>
+        <p>職場のトラブルが絶えず、毎日が辛かったです。御守りを受け取ってから1ヶ月で人間関係が嘘みたいに穏やかになりました。お寺の教えが宿った御守りの力を実感しています。</p>
         <p class="voice-attr">── 30代女性・会社員</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHY 5 -->
-<section class="why-section">
+<!-- ============ WHY 5 (dark) ============ -->
+<section class="dark-section">
   <div class="section-inner fade-in">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title">なぜ「5名様」なのか</h2>
-    <div class="why-text">
-      <p>
-        稲荷の眼で縁を深く霊視するという行為は、<br>
-        わたし自身の霊力と深く結びついています。
-      </p>
-      <p style="margin-top:24px;">
-        お一人おひとりの縁と運命に全身全霊で向き合う以上、<br>
-        同時にお受けできる数には限りがございます。
-      </p>
-      <p style="margin-top:24px;">
-        さらに、鑑定後に御守りを奉製できるのは<br>
-        わたしの霊力と特に親和性が高い方のみ。<br>
-        すべての方にお届けすることは叶いません。
-      </p>
-      <p style="margin-top:24px;">
-        そのため、この度は<br>
-        <strong style="color: var(--gold);">5名様のみの特別販売</strong>とさせていただきます。
-      </p>
+    <span class="s-eyebrow" style="color:var(--gold-light);">Why only 5?</span>
+    <h2 class="s-title s-title-light">なぜ「5名様」なのか</h2>
+    <div class="why-text" style="color:rgba(255,254,249,.75);">
+      <p>波動を深く霊視するという行為は、わたし自身の霊力と深く結びついています。</p>
+      <p>お一人おひとりの波動に全身全霊で向き合う以上、同時にお受けできる数には限りがございます。</p>
+      <p>さらに御守りを奉製できるのは、わたしの波動と特に親和性が高い方のみ。<br>すべての方にお届けすることは叶いません。</p>
+      <p>そのため今回は<strong style="color:var(--gold-light);">5名様のみの特別販売</strong>とさせていただきます。</p>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<section class="pricing-section">
+<!-- ============ PRICING ============ -->
+<section class="light-section">
   <div class="section-inner">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title" style="color: var(--paper);">特別販売</h2>
-    <div class="pricing-card fade-in">
-      <h3 class="pricing-title">縁結び御守鑑定</h3>
-      <p class="pricing-subtitle">縁と運命を霊視で読み解く特別鑑定</p>
-      <p class="original-price">通常価格 &yen;9,800</p>
-      <div class="special-price">
-        <span class="yen">&yen;</span>1,111<br>
-        <span class="tax">（税込）</span>
-      </div>
-      <p class="pricing-reason">
-        ご縁を結ぶ特別な3日間に、<br>
-        特別なお値段でお届けいたします。
-      </p>
-      <ul class="pricing-includes">
-        <li>縁・波動の状態を詳細に霊視鑑定</li>
+    <span class="s-eyebrow">Pricing</span>
+    <h2 class="s-title">特別販売</h2>
+    <div class="price-card fade-in">
+      <h3 class="price-title">専用波動御守鑑定</h3>
+      <p class="price-sub">あなたの波動を霊視で読み解く特別鑑定</p>
+      <p class="price-original">通常価格 &yen;9,800</p>
+      <div class="price-main"><span class="yen">&yen;</span>1,000<br><span class="tax">（税込）</span></div>
+      <p class="price-reason">ご縁を結ぶ特別な3日間に、特別なお値段でお届けいたします。</p>
+      <ul class="price-includes">
+        <li>あなたの波動の状態を詳細に霊視鑑定</li>
         <li>鑑定結果をLINEにて鑑定文でお届け</li>
         <li>VIP専用LINEへのご招待・個別対応</li>
-        <li>縁の深い方には御守り奉製のご案内</li>
+        <li>波動の相性が深い方には御守り奉製のご案内</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="faq-section">
+<!-- ============ FAQ ============ -->
+<section class="light-section alt">
   <div class="section-inner">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title">よくあるご質問</h2>
+    <span class="s-eyebrow">FAQ</span>
+    <h2 class="s-title">よくあるご質問</h2>
     <div class="faq-list fade-in">
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>支払い方法を教えてください</span>
-          <span class="toggle">+</span>
-        </div>
-        <div class="faq-a">
-          <p>お申し込みページ内の決済リンクからお支払いいただけます。詳細はお申し込み時にご確認ください。</p>
-        </div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span>支払い方法を教えてください</span><span class="tgl">+</span></div>
+        <div class="faq-a"><p>お申し込みページ内の決済リンクからお支払いいただけます。詳細はお申し込み時にご確認ください。</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>鑑定を受ければ必ず御守りをいただけますか？</span>
-          <span class="toggle">+</span>
-        </div>
-        <div class="faq-a">
-          <p>御守りの奉製には、わたし自身の霊力との相性が深く関わります。鑑定の結果、特に縁の深い方にのみ別途ご案内させていただきます。すべての方にお届けできるわけではございませんので、あらかじめご了承ください。</p>
-        </div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span>鑑定を受ければ必ず御守りをいただけますか？</span><span class="tgl">+</span></div>
+        <div class="faq-a"><p>御守りの奉製にはわたし自身の波動との相性が深く関わります。鑑定後、特に縁の深い方にのみ別途ご案内いたします。すべての方にお届けできるわけではありませんのでご了承ください。</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>鑑定にはどのような情報が必要ですか？</span>
-          <span class="toggle">+</span>
-        </div>
-        <div class="faq-a">
-          <p>ヒアリングシートをLINEにてお送りいたしますので、そちらにお答えください。お悩みの内容（片思い・復縁・金運・対人関係など）をお聞きします。</p>
-        </div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span>鑑定にはどのような情報が必要ですか？</span><span class="tgl">+</span></div>
+        <div class="faq-a"><p>ヒアリングシートをLINEにてお送りいたします。お悩みの内容（片思い・復縁・金運・対人関係など）をお聞きします。</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>鑑定結果はどのように届きますか？</span>
-          <span class="toggle">+</span>
-        </div>
-        <div class="faq-a">
-          <p>VIP専用LINEにて、文章（鑑定文）としてお届けいたします。郵送ではございません。お届けまで数日ほどお時間を頂戴する場合がございます。</p>
-        </div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span>鑑定結果はどのように届きますか？</span><span class="tgl">+</span></div>
+        <div class="faq-a"><p>VIP専用LINEにて鑑定文としてお届けいたします。郵送ではありません。お届けまで数日ほどお時間をいただく場合がございます。</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>5名を超えた場合はどうなりますか？</span>
-          <span class="toggle">+</span>
-        </div>
-        <div class="faq-a">
-          <p>定員に達し次第、募集を締め切らせていただきます。次回の販売時期は未定ですが、ご要望があれば公式LINEにてお知らせいたします。</p>
-        </div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span>5名を超えた場合はどうなりますか？</span><span class="tgl">+</span></div>
+        <div class="faq-a"><p>定員に達し次第、募集を締め切らせていただきます。次回の販売時期は公式LINEにてお知らせいたします。</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>申し込み後のキャンセルはできますか？</span>
-          <span class="toggle">+</span>
-        </div>
-        <div class="faq-a">
-          <p>霊視鑑定に着手する性質上、お申し込み後のキャンセルは原則としてお受けしておりません。ご了承のうえお申し込みください。</p>
-        </div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span>申し込み後のキャンセルはできますか？</span><span class="tgl">+</span></div>
+        <div class="faq-a"><p>霊視鑑定に着手する性質上、お申し込み後のキャンセルは原則お受けしておりません。ご了承のうえお申し込みください。</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
+<!-- ============ CTA ============ -->
 <section class="cta-section">
   <div class="section-inner fade-in">
-    <p class="section-torii">⛩</p>
-    <h2 class="section-title" style="margin-bottom:30px;">
-      まずは、あなたの縁の状態を<br>知ることから始めてみませんか
+    <span class="s-eyebrow">Apply now</span>
+    <h2 class="s-title" style="margin-bottom:24px;">
+      まず、あなたの波動を<br>知ることから始めてみませんか
     </h2>
-    <p class="cta-text">
-      いま、このページにたどり着いたこと自体が、<br>
-      ひとつのご縁だとわたしは感じています。<br><br>
-      片思い、復縁、お金、人間関係──<br>
-      うまくいかない理由は、必ずあります。<br><br>
-      縁の状態を知ることが、<br>
-      運命を好転させる最初の一歩です。
+    <p class="cta-lead">
+      いま、このページにたどり着いたこと自体が、<br>ひとつのご縁だとわたしは感じています。<br><br>
+      片思い、復縁、お金、人間関係──<br>うまくいかない理由は、必ずあります。<br><br>
+      波動の状態を知ることが、運命を好転させる最初の一歩です。
     </p>
-    <a href="#" class="cta-button" id="cta-main-btn">
-      ✦ 縁結び御守鑑定に申し込む ✦
-    </a>
+    <a href="#" class="cta-btn" id="cta-main-btn">専用波動御守鑑定に申し込む</a>
     <p class="cta-note">※ タップすると申し込みページに移動します</p>
     <div class="cta-remaining">残り <strong>5</strong> 名様</div>
-    <div style="margin-top:20px;">
-      <p class="countdown-sublabel">◆ 販売受付期間 ◆</p>
-      <p class="countdown-sublabel">2026年3月29日（日）19:00 〜 3月31日（火）23:59</p>
-    </div>
+    <p class="cta-period">◆ 販売受付期間：2026年3月29日（日）19:00 〜 3月31日（火）23:59 ◆</p>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ============ FOOTER ============ -->
 <footer class="footer">
   <p>&copy; 2026 いと ─ All Rights Reserved.</p>
 </footer>
 
-<!-- MODAL -->
-<div class="prelaunch-overlay" id="prelaunchModal">
-  <div class="prelaunch-modal">
-    <div class="prelaunch-torii">⛩</div>
-    <h3 class="prelaunch-title">まだお申し込みは開始しておりません</h3>
-    <div class="prelaunch-divider"></div>
-    <p class="prelaunch-text">
-      縁結び御守鑑定のお申し込み受付は<br>
+<!-- ============ MODAL ============ -->
+<div class="overlay" id="prelaunchModal">
+  <div class="modal">
+    <div class="modal-icon">🪷</div>
+    <h3 class="modal-title">まだお申し込みは開始しておりません</h3>
+    <div class="modal-div"></div>
+    <p class="modal-body">
+      専用波動御守鑑定のお申し込み受付は<br>
       2026年3月29日（日）19:00 より開始いたします。<br><br>
       開始までもうしばらくお待ちくださいませ。
     </p>
-    <button class="prelaunch-close" onclick="closePrelaunch()">閉じる</button>
+    <button class="modal-close" onclick="closeModal()">閉じる</button>
   </div>
 </div>
 
-<!-- STICKY CTA -->
-<div class="sticky-cta" id="stickyCta">
-  <a href="#" class="sticky-cta-btn" id="sticky-btn">✦ 縁結び御守鑑定に申し込む ✦</a>
-  <p class="sticky-cta-sub">5名様限定｜3/31 23:59 まで</p>
+<!-- ============ STICKY ============ -->
+<div class="sticky" id="stickyCta">
+  <a href="#" class="sticky-btn" id="sticky-btn">専用波動御守鑑定に申し込む →</a>
+  <p class="sticky-sub">5名様限定｜3/31 23:59 まで</p>
 </div>
 
 <script>
 // Particles
-(function() {
+(function(){
   const c = document.getElementById('particles');
-  for (let i = 0; i < 20; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDelay = Math.random() * 8 + 's';
-    p.style.animationDuration = (6 + Math.random() * 6) + 's';
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div'); p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDelay=Math.random()*10+'s';
+    p.style.animationDuration=(8+Math.random()*6)+'s';
     c.appendChild(p);
   }
 })();
 
 // Countdown
-(function() {
-  const startDate = new Date('2026-03-29T19:00:00+09:00');
-  const endDate   = new Date('2026-03-31T23:59:59+09:00');
-  function update() {
-    const now = new Date();
-    const label  = document.getElementById('countdown-label');
-    const status = document.getElementById('countdown-status');
+(function(){
+  const start=new Date('2026-03-29T19:00:00+09:00');
+  const end  =new Date('2026-03-31T23:59:59+09:00');
+  function tick(){
+    const now=new Date(), lbl=document.getElementById('cd-label'), st=document.getElementById('cd-status');
     let target;
-    if (now < startDate) {
-      target = startDate;
-      label.textContent = '◆ 販売開始まで ◆';
-      status.textContent = '';
-    } else if (now < endDate) {
-      target = endDate;
-      label.textContent = '◆ 販売終了まで ◆';
-      status.textContent = '🔴 現在受付中';
-    } else {
-      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
-      label.textContent  = '◆ 販売は終了しました ◆';
-      status.textContent = 'ありがとうございました';
-      return;
+    if(now<start){ target=start; lbl.textContent='◆ 販売開始まで ◆'; st.textContent=''; }
+    else if(now<end){ target=end; lbl.textContent='◆ 販売終了まで ◆'; st.textContent='🔴 現在受付中'; }
+    else{
+      ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='00');
+      lbl.textContent='◆ 販売は終了しました ◆'; st.textContent='ありがとうございました'; return;
     }
-    const diff = target - now;
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
-    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
-    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
-    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+    const d=target-now;
+    document.getElementById('cd-d').textContent=String(Math.floor(d/86400000)).padStart(2,'0');
+    document.getElementById('cd-h').textContent=String(Math.floor(d%86400000/3600000)).padStart(2,'0');
+    document.getElementById('cd-m').textContent=String(Math.floor(d%3600000/60000)).padStart(2,'0');
+    document.getElementById('cd-s').textContent=String(Math.floor(d%60000/1000)).padStart(2,'0');
   }
-  update(); setInterval(update, 1000);
+  tick(); setInterval(tick,1000);
 })();
 
 // Fade-in
-(function() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+(function(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:.12});
+  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 })();
 
-// Sticky CTA
-(function() {
-  const sticky = document.getElementById('stickyCta');
-  const hero = document.querySelector('.hero');
-  window.addEventListener('scroll', () => {
-    sticky.classList.toggle('show', hero.getBoundingClientRect().bottom < 0);
-  });
+// Sticky
+(function(){
+  const s=document.getElementById('stickyCta'), h=document.querySelector('.hero');
+  window.addEventListener('scroll',()=>s.classList.toggle('show',h.getBoundingClientRect().bottom<0));
 })();
 
 // Link guard
-(function() {
-  const startDate = new Date('2026-03-29T19:00:00+09:00');
-  const shopUrl = '#'; // TODO: Replace with actual shop URL
-  function guard(e) {
-    if (new Date() < startDate) {
-      e.preventDefault();
-      document.getElementById('prelaunchModal').classList.add('show');
-    } else if (shopUrl !== '#') {
-      e.preventDefault();
-      window.open(shopUrl, '_blank');
-    }
+(function(){
+  const start=new Date('2026-03-29T19:00:00+09:00');
+  const shopUrl='#'; // TODO: 申し込みURLに変更
+  function guard(e){
+    if(new Date()<start){ e.preventDefault(); document.getElementById('prelaunchModal').classList.add('show'); }
+    else if(shopUrl!=='#'){ e.preventDefault(); window.open(shopUrl,'_blank'); }
   }
-  document.getElementById('cta-main-btn').addEventListener('click', guard);
-  document.getElementById('sticky-btn').addEventListener('click', guard);
+  document.getElementById('cta-main-btn').addEventListener('click',guard);
+  document.getElementById('sticky-btn').addEventListener('click',guard);
 })();
 
-function closePrelaunch() { document.getElementById('prelaunchModal').classList.remove('show'); }
-function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
+function closeModal(){ document.getElementById('prelaunchModal').classList.remove('show'); }
+function toggleFaq(el){ el.closest('.faq-item').classList.toggle('open'); }
 </script>
 </body>
 </html>
