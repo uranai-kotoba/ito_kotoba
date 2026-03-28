@@ -1,248 +1,1116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ping-Pong Timing Duel</title>
-  <style>
-    :root{
-      --bg:#0f1220;--panel:#171a2b;--accent:#58e1ff;--accent2:#ff7ad9;--text:#e8ecff;--muted:#aab1d6;--good:#6dff9c;--bad:#ff8484
-    }
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(1200px 600px at 70% -10%,#1b2147 0%,#0f1220 60%,#0a0d1a 100%);color:var(--text);font-family:ui-sans-serif,system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;}
-    .wrap{min-height:100svh;display:grid;place-items:center;padding:24px}
-    .card{width:min(960px,95vw);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.45);padding:20px 20px 14px}
-    h1{margin:0 0 8px;font-weight:800;letter-spacing:.2px}
-    .sub{color:var(--muted);margin-bottom:12px}
-    .board{position:relative;background:linear-gradient(180deg,#0b0f1d,#0b0e1a);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px}
-    canvas{width:100%;height:auto;max-height:62vh;display:block;border-radius:10px;background:linear-gradient(180deg,#0a0f1c,#0a101a)}
-    .hud{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
-    .pill{border:1px solid rgba(255,255,255,.12);padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.04);color:var(--text);font-weight:700}
-    .accent{color:var(--accent)} .accent2{color:var(--accent2)}
-    .btns{margin-left:auto;display:flex;gap:8px}
-    button{all:unset;border:1px solid rgba(255,255,255,.14);padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.06);cursor:pointer;transition:.2s ease;}
-    button:hover{transform:translateY(-1px);background:rgba(255,255,255,.1)}
-    .note{color:var(--muted);font-size:.95rem;margin-top:10px}
-    .toast{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
-    .toast span{background:rgba(0,0,0,.55);backdrop-filter:blur(6px);padding:10px 16px;border:1px solid rgba(255,255,255,.15);border-radius:999px;font-weight:800}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>専魂御守鑑定｜あなただけの御守りを霊視で奉製</title>
+<meta name="description" content="あなたの波動を霊視で深く読み解き、ぴったりの御守りを奉製いたします。限定5名様の特別鑑定。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS Variables ===== */
+:root {
+  --crimson: #8B0000;
+  --vermillion: #C41E3A;
+  --deep-red: #6B0F1A;
+  --shrine-red: #B22222;
+  --gold: #C9A84C;
+  --gold-light: #E8D48B;
+  --gold-dark: #8B7332;
+  --ink: #1A0A0A;
+  --ink-light: #2D1515;
+  --paper: #FDF5E6;
+  --paper-warm: #FAF0DC;
+  --paper-dark: #F0E0C0;
+  --white-mist: rgba(255,255,255,0.08);
+  --shadow-red: rgba(139,0,0,0.3);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  line-height: 1.9;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Utility ===== */
+.section-inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+.accent-text { color: var(--gold); font-family: 'Shippori Mincho', serif; }
+.red-accent { color: var(--vermillion); }
+
+/* ===== Decorative Patterns ===== */
+.pattern-overlay {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(139,0,0,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(196,30,58,0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+.asanoha-pattern {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23C9A84C' stroke-width='0.5'/%3E%3Cpath d='M30 0L30 60M0 30L60 30' fill='none' stroke='%23C9A84C' stroke-width='0.3'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ===== Floating Particles ===== */
+.particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.particle {
+  position: absolute; width: 3px; height: 3px;
+  background: var(--gold); border-radius: 50%;
+  opacity: 0; animation: floatUp 8s infinite;
+}
+@keyframes floatUp {
+  0% { opacity:0; transform: translateY(100vh) scale(0.5); }
+  20% { opacity:0.6; }
+  80% { opacity:0.3; }
+  100% { opacity:0; transform: translateY(-10vh) scale(1.2); }
+}
+
+/* ===== Scroll Fade-in ===== */
+.fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ===========================
+   HERO SECTION
+   =========================== */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background: linear-gradient(175deg, var(--ink) 0%, var(--deep-red) 40%, var(--crimson) 70%, var(--ink) 100%);
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(196,30,58,0.2) 0%, transparent 70%);
+  animation: heroGlow 6s ease-in-out infinite alternate;
+}
+@keyframes heroGlow {
+  0% { opacity:0.5; transform: translateX(-50%) scale(1); }
+  100% { opacity:1; transform: translateX(-50%) scale(1.15); }
+}
+.hero-content { position: relative; z-index: 2; padding: 40px 24px; }
+.hero-badge {
+  display: inline-block; padding: 8px 28px;
+  border: 1px solid var(--gold); color: var(--gold);
+  font-family: 'Shippori Mincho', serif; font-size: 0.82rem;
+  letter-spacing: 0.25em; margin-bottom: 36px; position: relative;
+  animation: fadeInDown 1s ease 0.3s both;
+}
+.hero-badge::before, .hero-badge::after {
+  content: '\26E9'; position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 0.7rem; opacity: 0.7;
+}
+.hero-badge::before { left: 8px; }
+.hero-badge::after { right: 8px; }
+@keyframes fadeInDown {
+  from { opacity:0; transform: translateY(-20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+.hero-lead {
+  font-family: 'Shippori Mincho', serif; font-size: 0.95rem;
+  color: var(--gold-light); letter-spacing: 0.15em; margin-bottom: 20px;
+  animation: fadeInDown 1s ease 0.6s both;
+}
+.hero-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(1.8rem, 6vw, 3rem); font-weight: 700;
+  line-height: 1.5; letter-spacing: 0.08em; color: var(--paper);
+  margin-bottom: 24px; animation: fadeInDown 1s ease 0.8s both;
+}
+.hero-title em {
+  font-style: normal; color: var(--gold);
+  text-shadow: 0 0 30px rgba(201,168,76,0.4);
+}
+.hero-sub {
+  font-family: 'Noto Serif JP', serif; font-size: 0.92rem;
+  color: rgba(253,245,230,0.7); line-height: 2.2; letter-spacing: 0.06em;
+  max-width: 520px; margin: 0 auto 40px;
+  animation: fadeInDown 1s ease 1s both;
+}
+.hero-limited {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: rgba(139,0,0,0.5); border: 1px solid var(--vermillion);
+  padding: 14px 32px; border-radius: 4px;
+  font-family: 'Shippori Mincho', serif; font-size: 1.05rem;
+  color: var(--paper); letter-spacing: 0.12em;
+  animation: fadeInDown 1s ease 1.2s both;
+}
+.hero-limited .num { font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+.scroll-indicator {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  z-index: 2; animation: bounce 2s infinite;
+}
+.scroll-indicator span {
+  display: block; width: 1px; height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--gold));
+}
+@keyframes bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* ===========================
+   COUNTDOWN TIMER
+   =========================== */
+.countdown-section {
+  position: relative; padding: 60px 0;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--ink-light) 50%, var(--ink) 100%);
+  text-align: center;
+}
+.countdown-label {
+  font-family: 'Shippori Mincho', serif; font-size: 0.9rem;
+  color: var(--gold); letter-spacing: 0.2em; margin-bottom: 8px;
+}
+.countdown-sublabel { font-size: 0.82rem; color: rgba(253,245,230,0.5); margin-bottom: 28px; }
+.countdown-wrap { display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; }
+.countdown-unit { display: flex; flex-direction: column; align-items: center; min-width: 70px; }
+.countdown-num {
+  font-family: 'Shippori Mincho', serif; font-size: 2.4rem; font-weight: 700;
+  color: var(--paper);
+  background: linear-gradient(135deg, var(--crimson), var(--deep-red));
+  border: 1px solid rgba(201,168,76,0.3); border-radius: 8px;
+  width: 72px; height: 72px; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(139,0,0,0.4);
+}
+.countdown-text { font-size: 0.72rem; color: var(--gold-dark); letter-spacing: 0.15em; margin-top: 8px; }
+.countdown-status {
+  font-family: 'Shippori Mincho', serif; font-size: 1rem;
+  color: var(--vermillion); letter-spacing: 0.1em; margin-top: 16px;
+}
+
+/* ===========================
+   IMAGE SECTION
+   =========================== */
+.hero-image-section {
+  padding: 0 24px; max-width: 720px; margin: -20px auto 0;
+}
+.hero-image-section img {
+  width: 100%; border-radius: 6px; display: block;
+}
+.image-placeholder {
+  width: 100%; aspect-ratio: 1/1;
+  background: linear-gradient(135deg, var(--ink-light) 0%, rgba(139,0,0,0.2) 100%);
+  border: 1px dashed rgba(201,168,76,0.3); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(201,168,76,0.4); font-family: 'Shippori Mincho', serif;
+  font-size: 0.85rem; letter-spacing: 0.1em; position: relative; overflow: hidden;
+}
+
+/* ===========================
+   PROBLEM SECTION
+   =========================== */
+.problem-section { position: relative; padding: 100px 0; background: var(--ink); }
+.section-torii {
+  text-align: center; font-size: 1.4rem; color: var(--vermillion);
+  margin-bottom: 12px; opacity: 0.7;
+}
+.section-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 600;
+  text-align: center; line-height: 1.7; letter-spacing: 0.06em;
+  color: var(--paper); margin-bottom: 50px;
+}
+.section-title .gold { color: var(--gold); }
+.section-title .red { color: var(--vermillion); }
+.problem-text {
+  font-family: 'Noto Serif JP', serif; font-size: 0.95rem; line-height: 2.4;
+  color: rgba(253,245,230,0.85); text-align: center; letter-spacing: 0.04em;
+  max-width: 600px; margin: 0 auto;
+}
+.problem-text p { margin-bottom: 28px; }
+.divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 48px auto;
+}
+.problem-list { list-style: none; max-width: 540px; margin: 40px auto 0; }
+.problem-list li {
+  position: relative; padding: 18px 20px 18px 48px;
+  font-family: 'Noto Serif JP', serif; font-size: 0.92rem;
+  color: rgba(253,245,230,0.8); border-bottom: 1px solid rgba(201,168,76,0.08);
+  letter-spacing: 0.03em;
+}
+.problem-list li::before {
+  content: '\25AA'; position: absolute; left: 20px;
+  color: var(--vermillion); font-size: 0.7rem;
+}
+
+/* ===========================
+   SOLUTION SECTION
+   =========================== */
+.solution-section {
+  position: relative; padding: 100px 0;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--deep-red) 50%, var(--ink) 100%);
+  overflow: hidden;
+}
+.solution-box {
+  background: rgba(26,10,10,0.7); border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px; padding: 60px 36px; text-align: center;
+  position: relative; backdrop-filter: blur(10px);
+}
+.solution-box::before {
+  content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  width: 80px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.solution-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(1.2rem, 4vw, 1.6rem); font-weight: 600;
+  color: var(--gold); letter-spacing: 0.1em; margin-bottom: 32px; line-height: 1.8;
+}
+.solution-desc {
+  font-family: 'Noto Serif JP', serif; font-size: 0.92rem; line-height: 2.4;
+  color: rgba(253,245,230,0.85); max-width: 520px; margin: 0 auto; letter-spacing: 0.03em;
+}
+.solution-desc p { margin-bottom: 24px; }
+
+/* ===========================
+   PROCESS SECTION
+   =========================== */
+.process-section { position: relative; padding: 100px 0; background: var(--ink); }
+.process-steps {
+  display: flex; flex-direction: column; gap: 40px; margin-top: 50px;
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+.process-step { display: flex; gap: 24px; align-items: flex-start; }
+.step-number {
+  flex-shrink: 0; width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--gold); border-radius: 50%;
+  font-family: 'Shippori Mincho', serif; font-size: 1.1rem; font-weight: 600;
+  color: var(--gold);
+}
+.step-content h3 {
+  font-family: 'Shippori Mincho', serif; font-size: 1.05rem; font-weight: 600;
+  color: var(--paper); letter-spacing: 0.06em; margin-bottom: 8px;
+}
+.step-content p { font-size: 0.88rem; color: rgba(253,245,230,0.65); line-height: 2; }
+
+/* ===========================
+   PROFILE SECTION
+   =========================== */
+.profile-section {
+  position: relative; padding: 100px 0;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--ink-light) 100%);
+}
+.profile-card { text-align: center; }
+.profile-image-wrap {
+  width: 180px; height: 180px; margin: 0 auto 32px;
+  border-radius: 50%; border: 2px solid rgba(201,168,76,0.3); overflow: hidden;
+  background: linear-gradient(135deg, var(--crimson), var(--deep-red));
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(201,168,76,0.3); font-size: 0.75rem; letter-spacing: 0.1em;
+}
+.profile-image-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.profile-name {
+  font-family: 'Shippori Mincho', serif; font-size: 1.4rem; font-weight: 600;
+  color: var(--paper); letter-spacing: 0.15em; margin-bottom: 8px;
+}
+.profile-role {
+  font-family: 'Shippori Mincho', serif; font-size: 0.85rem;
+  color: var(--gold); letter-spacing: 0.2em; margin-bottom: 28px;
+}
+.profile-bio {
+  font-family: 'Noto Serif JP', serif; font-size: 0.9rem; line-height: 2.4;
+  color: rgba(253,245,230,0.8); max-width: 520px; margin: 0 auto;
+  text-align: left; letter-spacing: 0.03em;
+}
+.profile-stats { display: flex; justify-content: center; gap: 48px; margin-top: 36px; }
+.stat-item { text-align: center; }
+.stat-num { font-family: 'Shippori Mincho', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); }
+.stat-label { font-size: 0.75rem; color: rgba(253,245,230,0.5); letter-spacing: 0.1em; margin-top: 4px; }
+
+/* ===========================
+   WHY 5 SECTION
+   =========================== */
+.why-section {
+  position: relative; padding: 100px 0;
+  background: linear-gradient(180deg, var(--ink-light) 0%, var(--deep-red) 50%, var(--ink) 100%);
+  text-align: center;
+}
+.why-text {
+  font-family: 'Noto Serif JP', serif; font-size: 0.92rem; line-height: 2.4;
+  color: rgba(253,245,230,0.85); max-width: 520px; margin: 0 auto; letter-spacing: 0.03em;
+}
+
+/* ===========================
+   PRICING SECTION
+   =========================== */
+.pricing-section {
+  position: relative; padding: 100px 0;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--deep-red) 50%, var(--ink) 100%);
+  text-align: center; overflow: hidden;
+}
+.pricing-card {
+  background: rgba(26,10,10,0.85); border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 16px; padding: 56px 36px; max-width: 480px; margin: 0 auto;
+  position: relative; backdrop-filter: blur(10px);
+}
+.pricing-card::before {
+  content: '特別鑑定'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--crimson); border: 1px solid var(--gold);
+  padding: 4px 24px; font-family: 'Shippori Mincho', serif; font-size: 0.8rem;
+  color: var(--gold); letter-spacing: 0.2em; border-radius: 20px; white-space: nowrap;
+}
+.pricing-title {
+  font-family: 'Shippori Mincho', serif; font-size: 1.2rem; font-weight: 600;
+  color: var(--paper); letter-spacing: 0.1em; margin-bottom: 8px; margin-top: 12px;
+}
+.pricing-subtitle { font-size: 0.82rem; color: rgba(253,245,230,0.5); margin-bottom: 32px; }
+.original-price {
+  font-family: 'Shippori Mincho', serif; font-size: 1.1rem;
+  color: rgba(253,245,230,0.4); text-decoration: line-through; margin-bottom: 8px;
+}
+.special-price {
+  font-family: 'Shippori Mincho', serif; font-size: 3rem; font-weight: 800;
+  color: var(--gold); letter-spacing: 0.05em; line-height: 1.2;
+  text-shadow: 0 0 40px rgba(201,168,76,0.3);
+}
+.special-price .yen { font-size: 1.4rem; font-weight: 600; }
+.special-price .tax { font-size: 0.75rem; font-weight: 400; color: rgba(253,245,230,0.4); }
+.pricing-reason {
+  font-family: 'Noto Serif JP', serif; font-size: 0.82rem;
+  color: rgba(253,245,230,0.6); margin-top: 16px; line-height: 1.9;
+  max-width: 380px; margin-left: auto; margin-right: auto;
+}
+.pricing-includes {
+  list-style: none; margin-top: 32px; text-align: left;
+  max-width: 340px; margin-left: auto; margin-right: auto;
+}
+.pricing-includes li {
+  padding: 10px 0; font-size: 0.88rem; color: rgba(253,245,230,0.8);
+  border-bottom: 1px solid rgba(201,168,76,0.08); padding-left: 24px; position: relative;
+}
+.pricing-includes li::before {
+  content: '\2726'; position: absolute; left: 0; color: var(--gold); font-size: 0.65rem;
+}
+
+/* ===========================
+   VOICE SECTION
+   =========================== */
+.voice-section {
+  position: relative; padding: 100px 0;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--ink-light) 100%);
+}
+.voice-cards {
+  display: flex; flex-direction: column; gap: 28px; margin-top: 50px;
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+.voice-card {
+  background: rgba(139,0,0,0.1); border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 10px; padding: 28px 24px; position: relative;
+}
+.voice-card::before {
+  content: '\201C'; position: absolute; top: 12px; left: 16px;
+  font-family: 'Shippori Mincho', serif; font-size: 2.5rem;
+  color: rgba(201,168,76,0.15); line-height: 1;
+}
+.voice-card p {
+  font-family: 'Noto Serif JP', serif; font-size: 0.88rem; line-height: 2.2;
+  color: rgba(253,245,230,0.75); padding-left: 8px;
+}
+.voice-card .voice-attr {
+  margin-top: 12px; font-size: 0.78rem; color: var(--gold-dark);
+  text-align: right; letter-spacing: 0.05em;
+}
+
+/* ===========================
+   FAQ SECTION
+   =========================== */
+.faq-section { position: relative; padding: 100px 0; background: var(--ink); }
+.faq-list { max-width: 560px; margin: 50px auto 0; }
+.faq-item { border-bottom: 1px solid rgba(201,168,76,0.1); padding: 24px 0; }
+.faq-q {
+  font-family: 'Shippori Mincho', serif; font-size: 0.95rem; color: var(--gold);
+  letter-spacing: 0.05em; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.faq-q::before { content: 'Q.'; margin-right: 12px; color: var(--vermillion); font-weight: 700; }
+.faq-q .toggle { font-size: 1.2rem; transition: transform 0.3s; color: rgba(253,245,230,0.3); }
+.faq-item.open .faq-q .toggle { transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+.faq-item.open .faq-a { max-height: 300px; padding-top: 16px; }
+.faq-a p {
+  font-size: 0.88rem; color: rgba(253,245,230,0.65); line-height: 2; padding-left: 28px;
+}
+
+/* ===========================
+   CTA SECTION
+   =========================== */
+.cta-section { position: relative; padding: 100px 0; background: var(--ink); text-align: center; }
+.cta-text {
+  font-family: 'Noto Serif JP', serif; font-size: 0.92rem;
+  color: rgba(253,245,230,0.7); line-height: 2.2; max-width: 480px; margin: 0 auto 40px;
+}
+.cta-button {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 20px 52px;
+  background: linear-gradient(135deg, var(--crimson), var(--shrine-red));
+  border: 1px solid var(--gold); border-radius: 6px;
+  color: var(--gold); font-family: 'Shippori Mincho', serif;
+  font-size: 1.1rem; font-weight: 600; letter-spacing: 0.15em;
+  text-decoration: none; transition: all 0.4s ease;
+  position: relative; overflow: hidden; cursor: pointer;
+}
+.cta-button::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(201,168,76,0.1), transparent);
+  transform: translateX(-100%); transition: transform 0.6s ease;
+}
+.cta-button:hover::before { transform: translateX(100%); }
+.cta-button:hover {
+  box-shadow: 0 0 40px rgba(139,0,0,0.5), 0 0 80px rgba(201,168,76,0.15);
+  transform: translateY(-2px);
+}
+.cta-note { font-size: 0.78rem; color: rgba(253,245,230,0.4); margin-top: 20px; letter-spacing: 0.05em; }
+.cta-remaining {
+  display: inline-block; margin-top: 24px; padding: 8px 24px;
+  border: 1px solid var(--vermillion); border-radius: 4px;
+  font-family: 'Shippori Mincho', serif; font-size: 0.88rem;
+  color: var(--vermillion); letter-spacing: 0.1em; animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+/* ===========================
+   FOOTER
+   =========================== */
+.footer {
+  padding: 40px 0; text-align: center; background: var(--ink);
+  border-top: 1px solid rgba(201,168,76,0.06);
+}
+.footer p { font-size: 0.72rem; color: rgba(253,245,230,0.25); letter-spacing: 0.05em; }
+
+/* ===========================
+   PRE-LAUNCH MODAL
+   =========================== */
+.prelaunch-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,4,4,0.85); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+}
+.prelaunch-overlay.show { display: flex; }
+.prelaunch-modal {
+  background: linear-gradient(135deg, var(--ink-light), var(--deep-red));
+  border: 1px solid rgba(201,168,76,0.3); border-radius: 16px;
+  padding: 48px 36px; max-width: 400px; width: 90%; text-align: center;
+  animation: modalIn 0.4s ease;
+}
+@keyframes modalIn {
+  from { opacity:0; transform: scale(0.9) translateY(20px); }
+  to { opacity:1; transform: scale(1) translateY(0); }
+}
+.prelaunch-torii { font-size: 1.6rem; color: var(--vermillion); margin-bottom: 16px; opacity: 0.8; }
+.prelaunch-title {
+  font-family: 'Shippori Mincho', serif; font-size: 1.2rem; font-weight: 600;
+  color: var(--paper); letter-spacing: 0.1em; line-height: 1.7;
+}
+.prelaunch-divider {
+  width: 40px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto;
+}
+.prelaunch-text {
+  font-family: 'Noto Serif JP', serif; font-size: 0.9rem;
+  color: rgba(253,245,230,0.8); line-height: 2; letter-spacing: 0.03em;
+}
+.prelaunch-close {
+  margin-top: 28px; padding: 12px 36px; background: transparent;
+  border: 1px solid var(--gold); border-radius: 6px; color: var(--gold);
+  font-family: 'Shippori Mincho', serif; font-size: 0.9rem; letter-spacing: 0.1em;
+  cursor: pointer; transition: all 0.3s;
+}
+.prelaunch-close:hover { background: rgba(201,168,76,0.1); }
+
+/* ===========================
+   STICKY CTA
+   =========================== */
+.sticky-cta {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(26,10,10,0.95); backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  padding: 14px 20px; text-align: center;
+  transform: translateY(100%); transition: transform 0.5s ease;
+}
+.sticky-cta.show { transform: translateY(0); }
+.sticky-cta-btn {
+  display: inline-block; padding: 14px 40px;
+  background: linear-gradient(135deg, var(--crimson), var(--shrine-red));
+  border: 1px solid var(--gold); border-radius: 6px;
+  color: var(--gold); font-family: 'Shippori Mincho', serif;
+  font-size: 0.95rem; font-weight: 600; letter-spacing: 0.12em;
+  text-decoration: none; width: 100%; max-width: 360px;
+}
+.sticky-cta-sub { font-size: 0.7rem; color: rgba(253,245,230,0.4); margin-top: 4px; }
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 640px) {
+  .section-inner { padding: 0 18px; }
+  .hero-title { font-size: 1.6rem; }
+  .countdown-num { width: 58px; height: 58px; font-size: 1.8rem; }
+  .countdown-wrap { gap: 10px; }
+  .pricing-card { padding: 48px 24px; }
+  .special-price { font-size: 2.4rem; }
+  .profile-stats { gap: 28px; }
+  .solution-box { padding: 48px 24px; }
+  .process-step { gap: 16px; }
+  .cta-button { padding: 18px 36px; font-size: 1rem; }
+}
+</style>
 </head>
 <body>
-<div class="wrap">
-  <div class="card">
-    <h1>Ping-Pong Timing Duel 🏓</h1>
-    <div class="sub">Enter をタイミングよく押して打ち返す。先取 <strong>5 点</strong>で勝利。シンプルなタイミング卓球。</div>
 
-    <div class="board">
-      <canvas id="game" width="960" height="480" aria-label="game canvas"></canvas>
-      <div class="toast" id="toast" aria-live="polite" hidden><span id="toastText"></span></div>
-      <div class="hud">
-        <div class="pill">P1 <span class="accent">(左)</span>: <span id="p1">0</span></div>
-        <div class="pill">P2 <span class="accent2">(右)</span>: <span id="p2">0</span></div>
-        <div class="pill">ラリー: <span id="rally">0</span></div>
-        <div class="btns">
-          <button id="start">▶ Start / Pause (Space)</button>
-          <button id="reset">↺ Reset</button>
-          <button id="mode">モード: <span id="modeLabel">ソロ</span></button>
+<!-- Floating Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <div class="pattern-overlay"></div>
+  <div class="asanoha-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-badge">四月 特別販売</div>
+    <p class="hero-lead">── 神前に灯された、ただひとつの祈り ──</p>
+    <h1 class="hero-title">
+      あなたの波動の"いま"を、<br>
+      <em>霊視で深く読み解く</em>
+    </h1>
+    <p class="hero-sub">
+      あなたが纏っている波動の状態を<br>
+      霊視によって詳細に鑑定いたします。<br>
+      そしてその結果をもとに、<br>
+      <strong style="color: var(--gold-light);">あなたの波動にぴったり合った御守り</strong>を<br>
+      奉製できる可能性がございます。
+    </p>
+    <div class="hero-limited">
+      限定 <span class="num">5</span> 名様のみ
+    </div>
+  </div>
+  <div class="scroll-indicator"><span></span></div>
+</section>
+
+<!-- ===== COUNTDOWN TIMER ===== -->
+<section class="countdown-section" id="countdown">
+  <div class="section-inner">
+    <p class="countdown-label" id="countdown-label">◆ 販売開始まで ◆</p>
+    <p class="countdown-sublabel" id="countdown-sublabel">2026年4月1日（水）19:00 〜 4月5日（日）23:59</p>
+    <div class="countdown-wrap">
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-days">--</div>
+        <div class="countdown-text">日</div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-hours">--</div>
+        <div class="countdown-text">時間</div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-mins">--</div>
+        <div class="countdown-text">分</div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-secs">--</div>
+        <div class="countdown-text">秒</div>
+      </div>
+    </div>
+    <p class="countdown-status" id="countdown-status"></p>
+  </div>
+</section>
+
+<!-- ===== IMAGE PLACEHOLDER ===== -->
+<section class="hero-image-section">
+  <div class="image-placeholder">神社・鳥居の画像がここに入ります</div>
+</section>
+
+<!-- ===== PROBLEM SECTION ===== -->
+<section class="problem-section">
+  <div class="section-inner fade-in">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title">
+      いま手にしているその御守り、<br>
+      <span class="red">本当にあなたの波動に合っていますか？</span>
+    </h2>
+    <div class="problem-text">
+      <p>
+        神社やお寺で手にすることができる御守りは、<br>
+        多くの方に届くよう祈願された大衆に向けたもの。<br>
+        もちろん、そこに込められた祈りは尊いものです。
+      </p>
+      <p>
+        けれど──<br>
+        <strong>あなたの波動に合っているとは限りません。</strong>
+      </p>
+      <p>
+        人はそれぞれ異なる波動を持ち、<br>
+        その状態も日々変化しています。<br>
+        そもそも自分の波動がいま<br>
+        どのような状態にあるのかを知らなければ、<br>
+        本当に必要な"護り"を選ぶことすらできないのです。
+      </p>
+    </div>
+    <div class="divider"></div>
+    <h3 class="section-title" style="font-size:1.1rem; margin-bottom:30px;">
+      こんな想いが、胸のどこかにありませんか？
+    </h3>
+    <ul class="problem-list">
+      <li>御守りを持っていても、なぜか心が軽くならない</li>
+      <li>自分の波動がいまどんな状態なのか分からない</li>
+      <li>自分にとって何が必要な"護り"なのか見えてこない</li>
+      <li>漠然とした不安がずっと、胸の奥に居座っている</li>
+      <li>見えない力に頼りたいけれど、何を信じればいいのか迷っている</li>
+      <li>今の自分を変えたいのに、何から手をつければいいのか分からない</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== SOLUTION SECTION ===== -->
+<section class="solution-section">
+  <div class="section-inner">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title" style="color: var(--paper);">
+      まず、あなたの波動を知ること。<br>
+      <span class="gold">すべてはそこから始まります</span>
+    </h2>
+    <div class="solution-box fade-in">
+      <h2 class="solution-title">専魂御守鑑定とは</h2>
+      <div class="solution-desc">
+        <p>
+          この鑑定では、あなたが今まとっている波動の状態を<br>
+          霊視によって深く、丁寧に読み解いていきます。
+        </p>
+        <p>
+          心の奥に潜む揺らぎ、エネルギーの流れ、<br>
+          いま必要としている力の方向性──<br>
+          あなた自身でも気づいていない波動の全体像を<br>
+          詳細にお伝えいたします。
+        </p>
+        <p>
+          そして、鑑定の結果に基づき、<br>
+          <span class="accent-text">あなたの波動にぴったり合った御守り</span>を<br>
+          奉製することも可能です。
+        </p>
+        <p>
+          ただし、御守りに波動を込めるにはわたし自身の霊力を注ぐ必要があり、<br>
+          すべての方にお届けすることは叶いません。<br>
+          鑑定後、特に相性が深いと感じた方にのみ、<br>
+          御守りのご案内をさせていただきます。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS SECTION ===== -->
+<section class="process-section">
+  <div class="section-inner">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title">御守りがあなたに届くまで</h2>
+    <div class="process-steps fade-in">
+      <div class="process-step">
+        <div class="step-number">壱</div>
+        <div class="step-content">
+          <h3>お申し込み</h3>
+          <p>このページの申し込みリンクからお申し込みください。</p>
         </div>
       </div>
-      <div class="note">操作: <strong>Enter</strong> で打ち返し。Space で一時停止/再開。モード: <strong>ソロ</strong>は一人で練習、<strong>対戦</strong>は交互ターン制で2人プレイ（同じキーボード）。</div>
+      <div class="process-step">
+        <div class="step-number">弐</div>
+        <div class="step-content">
+          <h3>公式LINEでお申し込みのご報告</h3>
+          <p>お申し込みが完了しましたら、公式LINEにてその旨をお伝えください。確認が取れ次第、VIP専用LINEへご招待いたします。</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">参</div>
+        <div class="step-content">
+          <h3>波動の霊視鑑定</h3>
+          <p>VIP専用LINEにてお悩みや想いをお聞きしたうえで、あなたの波動の状態を霊視で深く読み解きます。</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">肆</div>
+        <div class="step-content">
+          <h3>鑑定結果のお届け</h3>
+          <p>VIP専用LINEにて、あなたの波動の全体像と今必要な力の方向性を鑑定文としてお送りいたします。</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">伍</div>
+        <div class="step-content">
+          <h3>御守りのご案内（対象の方のみ）</h3>
+          <p>鑑定の結果、わたしの波動と特に相性が深いと感じた方には、あなた専用の御守り奉製について別途ご案内させていただきます。</p>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ===== PROFILE SECTION ===== -->
+<section class="profile-section">
+  <div class="section-inner">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title">奉製を担う者について</h2>
+    <div class="profile-card fade-in">
+      <div class="profile-image-wrap">
+        <span>画像</span>
+      </div>
+      <h3 class="profile-name">澪（みお）</h3>
+      <p class="profile-role">巫女・霊視鑑定師</p>
+      <div class="profile-bio">
+        <p>
+          代々続く神職の家系に生まれ、幼少の頃より目に見えぬものの気配とともに過ごしてまいりました。
+        </p>
+        <p style="margin-top:16px;">
+          人の心に宿る微細な揺れや、言葉になる前の願い──<br>
+          それらを受け止め、道を照らすことに二十年以上の歳月を捧げています。
+        </p>
+        <p style="margin-top:16px;">
+          現在は九州の地に身を置き、<br>
+          ご縁のあった方々と一対一で向き合う日々を重ねております。
+        </p>
+      </div>
+      <div class="profile-stats">
+        <div class="stat-item">
+          <div class="stat-num">20年以上</div>
+          <div class="stat-label">鑑定の研鑽</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3,000件超</div>
+          <div class="stat-label">ご相談実績</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VOICE SECTION ===== -->
+<section class="voice-section">
+  <div class="section-inner">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title">御守りを受け取った方の声</h2>
+    <div class="voice-cards fade-in">
+      <div class="voice-card">
+        <p>
+          御守りをいただく前は、毎晩のように将来への不安で眠れず、仕事でも些細なミスを繰り返していました。でも御守りを身につけてから、まず眠れるようになって、気がつけば職場での人間関係もほぐれていきました。心の芯に「大丈夫」という安心感が静かに灯ったような感覚です。
+        </p>
+        <p class="voice-attr">── 30代女性・会社員</p>
+      </div>
+      <div class="voice-card">
+        <p>
+          離婚を経験してから何年も、新しい一歩を踏み出すことができずにいました。御守りを受け取ってからは、不思議と「もう一度やり直してみよう」と自然に思えるようになりました。今では新しい趣味も始めて、笑顔で過ごせる日が明らかに増えています。
+        </p>
+        <p class="voice-attr">── 40代女性・パート</p>
+      </div>
+      <div class="voice-card">
+        <p>
+          子育てが一段落してから、自分が何のために生きているのか分からなくなっていました。御守りを受け取ってからは、ふと「自分のために何かしてみよう」と思えるようになり、昔好きだった書道教室に通い始めました。家の中の空気も少しずつ柔らかくなってきた気がしています。
+        </p>
+        <p class="voice-attr">── 50代女性・主婦</p>
+      </div>
+      <div class="voice-card">
+        <p>
+          派遣の契約が切れるたびに「次はあるのか」という恐怖に追い詰められていました。御守りを受け取ってから、不思議と焦りが和らいで、面接でも落ち着いて話せるようになったんです。結果、一ヶ月後に条件の良い長期の職場が決まりました。
+        </p>
+        <p class="voice-attr">── 50代男性・派遣社員</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WHY 5 SECTION ===== -->
+<section class="why-section">
+  <div class="section-inner fade-in">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title">なぜ「5名様」なのか</h2>
+    <div class="why-text">
+      <p>
+        波動を深く霊視するという行為は、<br>
+        わたし自身の霊力と深く結びついています。
+      </p>
+      <p style="margin-top:24px;">
+        お一人おひとりに全身全霊で向き合う以上、<br>
+        同時にお受けできる数には限りがございます。
+      </p>
+      <p style="margin-top:24px;">
+        さらに、鑑定後に御守りを奉製できるのは<br>
+        わたしの波動と特に親和性が高い方のみ。<br>
+        すべての方にお届けすることは叶いません。
+      </p>
+      <p style="margin-top:24px;">
+        そのため、この度は<br>
+        <strong style="color: var(--gold);">5名様のみの特別販売</strong>とさせていただきます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING SECTION ===== -->
+<section class="pricing-section">
+  <div class="section-inner">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title" style="color: var(--paper);">特別販売</h2>
+    <div class="pricing-card fade-in">
+      <h3 class="pricing-title">専魂御守鑑定</h3>
+      <p class="pricing-subtitle">あなたの波動を霊視で詳しく読み解く特別鑑定</p>
+      <p class="original-price">通常価格 &yen;9,800</p>
+      <div class="special-price">
+        <span class="yen">&yen;</span>1,111<br>
+        <span class="tax">（税込）</span>
+      </div>
+      <p class="pricing-reason">
+        特別なご縁を結べるよう、<br>
+        特別なお値段でお届けいたします。
+      </p>
+      <ul class="pricing-includes">
+        <li>あなたの波動の状態を詳細に霊視鑑定</li>
+        <li>鑑定結果をLINEにて鑑定文でお届け</li>
+        <li>VIP専用LINEへのご招待・個別対応</li>
+        <li>波動の相性が深い方には御守り奉製のご案内</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ SECTION ===== -->
+<section class="faq-section">
+  <div class="section-inner">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title">よくあるご質問</h2>
+    <div class="faq-list fade-in">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>支払い方法を教えてください</span>
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          <p>お申し込みページ内の決済リンクからお支払いいただけます。詳細はお申し込み時にご確認ください。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>鑑定を受ければ必ず御守りをいただけますか？</span>
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          <p>御守りの奉製には、わたし自身の波動との相性が深く関わります。鑑定の結果、特に相性が良いと感じた方にのみ別途ご案内させていただきます。すべての方にお届けできるわけではございませんので、あらかじめご了承ください。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>鑑定にはどのような情報が必要ですか？</span>
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          <p>ヒアリングシートをLINEにてお送りいたしますので、そちらにお答えください。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>鑑定結果はどのように届きますか？</span>
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          <p>VIP専用LINEにて、文章（鑑定文）としてお届けいたします。郵送ではございません。お届けまで数日ほどお時間を頂戴する場合がございます。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>5名を超えた場合はどうなりますか？</span>
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          <p>定員に達し次第、募集を締め切らせていただきます。次回の販売時期は未定ですが、ご要望があれば公式LINEにてお知らせいたします。</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>申し込み後のキャンセルはできますか？</span>
+          <span class="toggle">+</span>
+        </div>
+        <div class="faq-a">
+          <p>霊視鑑定に着手する性質上、お申し込み後のキャンセルは原則としてお受けしておりません。ご了承のうえお申し込みください。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA SECTION ===== -->
+<section class="cta-section">
+  <div class="section-inner fade-in">
+    <p class="section-torii">&#x26E9;</p>
+    <h2 class="section-title" style="margin-bottom:30px;">
+      まずはあなたの波動を、<br>知ることから始めてみませんか
+    </h2>
+    <p class="cta-text">
+      いま、このページにたどり着いたこと自体が、<br>
+      ひとつのご縁だと感じています。<br><br>
+      あなたの波動の"いま"を知ることで、<br>
+      本当に必要な護りの形が見えてきます。<br><br>
+      もし心のどこかに「知りたい」という灯りがあるなら、<br>
+      どうぞその直感を信じてみてください。
+    </p>
+    <a href="#" class="cta-button" id="cta-main-btn">
+      専魂御守鑑定に申し込む
+    </a>
+    <p class="cta-note">※ タップすると申し込みページに移動します</p>
+    <div class="cta-remaining">
+      残り <strong>5</strong> 名様
+    </div>
+    <div style="margin-top:20px;">
+      <p class="countdown-sublabel">◆ 販売受付期間 ◆</p>
+      <p class="countdown-sublabel">2026年4月1日（水）19:00 〜 4月5日（日）23:59</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <p>&copy; 2026 澪 ─ All Rights Reserved.</p>
+</footer>
+
+<!-- ===== PRE-LAUNCH MODAL ===== -->
+<div class="prelaunch-overlay" id="prelaunchModal">
+  <div class="prelaunch-modal">
+    <div class="prelaunch-torii">&#x26E9;</div>
+    <h3 class="prelaunch-title">
+      まだお申し込みは開始しておりません
+    </h3>
+    <div class="prelaunch-divider"></div>
+    <p class="prelaunch-text">
+      専魂御守鑑定のお申し込み受付は<br>
+      2026年4月1日（水）19:00 より開始いたします。<br><br>
+      開始までもうしばらくお待ちくださいませ。
+    </p>
+    <button class="prelaunch-close" onclick="closePrelaunch()">閉じる</button>
   </div>
 </div>
 
+<!-- ===== STICKY CTA ===== -->
+<div class="sticky-cta" id="stickyCta">
+  <a href="#" class="sticky-cta-btn" id="sticky-btn">&#x2726; 専魂御守鑑定に申し込む &#x2726;</a>
+  <p class="sticky-cta-sub">5名様限定｜4/5 23:59 まで</p>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
 <script>
-(() => {
-  const cvs = document.getElementById('game');
-  const ctx = cvs.getContext('2d');
-  const p1El = document.getElementById('p1');
-  const p2El = document.getElementById('p2');
-  const rallyEl = document.getElementById('rally');
-  const toast = document.getElementById('toast');
-  const toastText = document.getElementById('toastText');
-  const startBtn = document.getElementById('start');
-  const resetBtn = document.getElementById('reset');
-  const modeBtn = document.getElementById('mode');
-  const modeLabel = document.getElementById('modeLabel');
-
-  const W = cvs.width, H = cvs.height;
-
-  const state = {
-    running: false,
-    mode: 'solo', // 'solo' | 'versus'
-    rally: 0,
-    scores: { p1: 0, p2: 0 },
-    serveTo: 'p1',
-    ball: { x: W/2, y: H/2, vx: 320, vy: 0, r: 10 },
-    paddles: {
-      left: { x: 30, y: H/2-45, w: 12, h: 90, color: '#58e1ff' },
-      right:{ x: W-42, y: H/2-45, w: 12, h: 90, color: '#ff7ad9' },
-    },
-    hitWindow: 110, // ms window to hit when ball reaches paddle zone
-    lastSide: 'p2',
-    over: false
-  };
-
-  function resetBall(side) {
-    const dir = side === 'p1' ? 1 : -1;
-    state.ball.x = side === 'p1' ? state.paddles.left.x + 26 : state.paddles.right.x - 26;
-    state.ball.y = H/2;
-    const speed = 300 + Math.min(state.rally*12, 260);
-    state.ball.vx = speed * dir;
-    state.ball.vy = (Math.random()-0.5) * 160;
+// ===== Particles =====
+(function() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDelay = Math.random() * 8 + 's';
+    p.style.animationDuration = (6 + Math.random() * 6) + 's';
+    container.appendChild(p);
   }
+})();
 
-  function drawCourt(){
-    // background
-    const g = ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#0a1222'); g.addColorStop(1,'#08101b');
-    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
-    // center line
-    ctx.setLineDash([10,15]); ctx.strokeStyle = 'rgba(255,255,255,.12)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(W/2,20); ctx.lineTo(W/2,H-20); ctx.stroke(); ctx.setLineDash([]);
-    // edges glow
-    ctx.strokeStyle = 'rgba(88,225,255,.25)'; ctx.lineWidth = 4; ctx.strokeRect(8,8,W-16,H-16);
-  }
+// ===== Countdown Timer =====
+(function() {
+  const startDate = new Date('2026-04-01T19:00:00+09:00');
+  const endDate   = new Date('2026-04-05T23:59:59+09:00');
 
-  function drawPaddles(){
-    for(const p of [state.paddles.left, state.paddles.right]){
-      ctx.fillStyle = p.color; ctx.globalAlpha = .95; ctx.fillRect(p.x, p.y, p.w, p.h); ctx.globalAlpha = 1;
-      // glow
-      ctx.shadowColor = p.color; ctx.shadowBlur = 16; ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.strokeRect(p.x-.5, p.y-.5, p.w+1, p.h+1); ctx.shadowBlur = 0;
-    }
-  }
+  function update() {
+    const now = new Date();
+    const label  = document.getElementById('countdown-label');
+    const status = document.getElementById('countdown-status');
+    let target;
 
-  function drawBall(){
-    const b = state.ball;
-    const grd = ctx.createRadialGradient(b.x-4,b.y-4,2,b.x,b.y,14);
-    grd.addColorStop(0,'#fff'); grd.addColorStop(1,'#8fdcff');
-    ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill();
-    // trail
-    ctx.globalAlpha = .15; ctx.fillStyle = '#58e1ff'; ctx.beginPath(); ctx.arc(b.x-b.vx*0.02,b.y-b.vy*0.02,b.r*1.4,0,Math.PI*2); ctx.fill(); ctx.globalAlpha = 1;
-  }
-
-  function drawUI(){
-    // hit zones
-    ctx.fillStyle = 'rgba(255,255,255,.06)';
-    ctx.fillRect(state.paddles.left.x + state.paddles.left.w + 6, 30, 46, H-60);
-    ctx.fillRect(state.paddles.right.x - 52, 30, 46, H-60);
-    // text
-    ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.font = '700 16px ui-sans-serif, system-ui';
-    ctx.fillText('Enter で打ち返し', 24, 28);
-  }
-
-  function update(dt){
-    if(!state.running || state.over) return;
-    const b = state.ball;
-    b.x += b.vx * dt; b.y += b.vy * dt;
-
-    // bounce top/bottom
-    if(b.y < 16 || b.y > H-16){ b.vy *= -1; b.y = Math.max(16, Math.min(H-16, b.y)); }
-
-    // paddle rectangles (for visual, we use timing, not collision)
-    // scoring conditions: if ball passes beyond paddle x without a valid hit flag, it's a miss
-    if (b.x < state.paddles.left.x - 10){ // right player scores
-      point('p2');
-    }
-    if (b.x > state.paddles.right.x + state.paddles.right.w + 10){ // left player scores
-      point('p1');
-    }
-  }
-
-  function point(winner){
-    state.scores[winner]++;
-    p1El.textContent = state.scores.p1; p2El.textContent = state.scores.p2;
-    state.rally = 0; rallyEl.textContent = state.rally;
-    state.serveTo = winner === 'p1' ? 'p2' : 'p1';
-    showToast(`${winner==='p1'?'P1':'P2'} のポイント！`);
-    checkWin();
-    if(!state.over) resetBall(state.serveTo);
-  }
-
-  function checkWin(){
-    if(state.scores.p1 >= 5 || state.scores.p2 >= 5){
-      state.over = true; state.running = false;
-      const msg = state.scores.p1>state.scores.p2 ? 'P1 勝利！' : 'P2 勝利！';
-      showToast(msg + '  ↺ Reset で再戦');
-    }
-  }
-
-  let last=0; function loop(t){
-    const now = t/1000; const dt = Math.min(0.033, now - (last||now)); last = now;
-    drawCourt(); drawUI(); drawPaddles(); update(dt); drawBall();
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
-
-  function showToast(s, ms=1200){
-    toastText.textContent = s; toast.hidden = false; clearTimeout(showToast._t);
-    showToast._t = setTimeout(()=>toast.hidden = true, ms);
-  }
-
-  // timing logic: Enter within time window when ball center is within hit zone X of your paddle
-  function onHit(){
-    if(state.over) return;
-    const b = state.ball, L = state.paddles.left, R = state.paddles.right;
-    const now = performance.now();
-
-    // compute time to paddle plane
-    // translate hit window in spatial terms: zone width proportional to |vx| and hitWindow
-    const px = b.vx < 0 ? L.x + L.w + 6 : R.x - 6; // plane x to check
-    const dist = Math.abs(px - b.x);
-    const zonePx = Math.max(22, Math.abs(b.vx) * (state.hitWindow/1000));
-    const inZone = dist <= zonePx;
-
-    if(!inZone){
-      // early/late: immediate lose point to opponent
-      const winner = b.vx < 0 ? 'p2' : 'p1';
-      showToast('タイミングミス…');
-      point(winner);
+    if (now < startDate) {
+      target = startDate;
+      label.textContent = '◆ 販売開始まで ◆';
+      status.textContent = '';
+    } else if (now < endDate) {
+      target = endDate;
+      label.textContent = '◆ 販売終了まで ◆';
+      status.textContent = '\uD83D\uDD34 現在受付中';
+    } else {
+      document.getElementById('cd-days').textContent  = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent  = '00';
+      document.getElementById('cd-secs').textContent  = '00';
+      label.textContent  = '◆ 販売は終了しました ◆';
+      status.textContent = 'ありがとうございました';
       return;
     }
 
-    // valid hit: reverse vx, add speed, tweak vy based on relative Y to paddle center
-    const pad = b.vx < 0 ? L : R;
-    const rel = (b.y - (pad.y + pad.h/2)) / (pad.h/2); // -1..1
-    const speed = Math.min(Math.hypot(b.vx,b.vy)*1.06 + 20, 960);
-    const dir = b.vx < 0 ? 1 : -1;
-    b.vx = speed * dir;
-    b.vy = (b.vy + rel*180) * 0.9;
+    const diff = target - now;
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const s = Math.floor((diff % (1000*60)) / 1000);
 
-    state.rally++; rallyEl.textContent = state.rally;
-
-    // mini FX
-    for(let i=0;i<16;i++) spark(b.x, b.y, dir);
+    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
   }
-
-  // simple spark particles
-  const sparks=[]; function spark(x,y,dir){
-    sparks.push({x,y,vx:(Math.random()*120+60)*dir,vy:(Math.random()-0.5)*220,life:0.35});
-  }
-  (function drawSparks(){
-    const now = performance.now()/1000; if(!drawSparks._last) drawSparks._last = now; const dt = Math.min(0.033, now-drawSparks._last); drawSparks._last = now;
-    // update
-    for(let i=sparks.length-1;i>=0;i--){ const s=sparks[i]; s.x+=s.vx*dt; s.y+=s.vy*dt; s.vy+=220*dt; s.life-=dt; if(s.life<=0) sparks.splice(i,1); }
-    // draw after main loop using requestAnimationFrame hook
-    requestAnimationFrame(()=>{
-      ctx.save(); ctx.globalCompositeOperation='lighter';
-      for(const s of sparks){ ctx.globalAlpha = Math.max(0,s.life*2.2); ctx.fillStyle = '#b2f7ff'; ctx.beginPath(); ctx.arc(s.x,s.y,3,0,Math.PI*2); ctx.fill(); }
-      ctx.restore();
-    });
-    requestAnimationFrame(drawSparks);
-  })();
-
-  // controls
-  function toggle(){ state.running = !state.running; showToast(state.running?'再開':'一時停止', 800); }
-  startBtn.onclick = toggle;
-  resetBtn.onclick = () => { Object.assign(state, { running:false, mode:state.mode, rally:0, scores:{p1:0,p2:0}, serveTo:'p1', over:false }); p1El.textContent=0; p2El.textContent=0; rallyEl.textContent=0; resetBall('p1'); showToast('リセット'); };
-  modeBtn.onclick = () => { state.mode = state.mode==='solo'?'versus':'solo'; modeLabel.textContent = state.mode==='solo'?'ソロ':'対戦'; showToast(`モード: ${state.mode==='solo'?'ソロ':'対戦'}`, 900); };
-
-  window.addEventListener('keydown', (e)=>{
-    if(e.code==='Enter'){ e.preventDefault(); onHit(); }
-    if(e.code==='Space'){ e.preventDefault(); toggle(); }
-  });
-
-  // initial
-  resetBall('p1');
-  showToast('Space で Start / Enter で打ち返し', 1800);
+  update();
+  setInterval(update, 1000);
 })();
+
+// ===== Scroll Fade-in =====
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ===== Sticky CTA =====
+(function() {
+  const sticky = document.getElementById('stickyCta');
+  const hero = document.querySelector('.hero');
+  window.addEventListener('scroll', () => {
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    if (heroBottom < 0) { sticky.classList.add('show'); }
+    else { sticky.classList.remove('show'); }
+  });
+})();
+
+// ===== Pre-launch Link Guard =====
+(function() {
+  const startDate = new Date('2026-04-01T19:00:00+09:00');
+  // TODO: Replace with your actual shop URL
+  const shopUrl = '#';
+
+  function guardLink(e) {
+    const now = new Date();
+    if (now < startDate) {
+      e.preventDefault();
+      document.getElementById('prelaunchModal').classList.add('show');
+    } else {
+      // Redirect to shop when sale is active
+      if (shopUrl !== '#') {
+        e.preventDefault();
+        window.open(shopUrl, '_blank');
+      }
+    }
+  }
+  document.getElementById('cta-main-btn').addEventListener('click', guardLink);
+  document.getElementById('sticky-btn').addEventListener('click', guardLink);
+})();
+
+function closePrelaunch() {
+  document.getElementById('prelaunchModal').classList.remove('show');
+}
+
+// ===== FAQ Toggle =====
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  item.classList.toggle('open');
+}
 </script>
 </body>
 </html>
