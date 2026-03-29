@@ -760,7 +760,7 @@ body {
 // Link guard
 (function(){
   const start=new Date('2026-03-29T19:00:00+09:00');
-  const shopUrl='#'; // TODO: 申し込みURLに変更
+  const shopUrl='https://reiriuranai.stores.jp/items/69c8f454f1aad5a7282e528d';
   function guard(e){
     if(new Date()<start){ e.preventDefault(); document.getElementById('prelaunchModal').classList.add('show'); }
     else if(shopUrl!=='#'){ e.preventDefault(); window.open(shopUrl,'_blank'); }
